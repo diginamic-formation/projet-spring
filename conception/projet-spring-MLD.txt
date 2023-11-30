@@ -1,0 +1,2 @@
+
+# Modèle créé le : Thu Nov 30 17:15:50 CET 2023  Personne (id_Personne, matricule_Personne, fullname, birthday, height_Personne, url_Personne, #id)  Film (id_Film, name_Film, rating_Film, year_start, year_end, url_Film, summary_Film, #id_Langue, #id, #id_Country)  Genre (id_Genre, genre_Genre)  Language (id_Langue, name)  Place (id, region, other, #id_Country)  Country (id_Country, country)  a_joué_dans (id_Film, id_Personne, role)  est_realisé_par (id_Film, id_Personne)  appartient_à (id_Film, id_Genre)  
