@@ -1,12 +1,7 @@
 package fr.diginamic.database;
 
-import fr.diginamic.value.ParameterExtracter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -21,10 +16,8 @@ public class DataBaseInsertion {
     @Autowired
     ParameterExtracter parameterExtracter;
     public void insertFromFile(){
-        insertAceurs();
-
+        insertActeurs() 
     }
-
     public void insertAceurs() {
         HashMap<Integer,Integer> structureFile = new HashMap<>();
         System.out.println("Lecture Fichier  : " +parameterExtracter.getActeurPath());
@@ -44,6 +37,7 @@ public class DataBaseInsertion {
             throw new RuntimeException(e);
         }
 
-        System.out.println(structureFile);
+     
+	System.out.println(structureFile);
     }
 }
