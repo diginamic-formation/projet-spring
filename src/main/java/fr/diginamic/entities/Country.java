@@ -9,7 +9,7 @@ import java.util.Objects;
  * en relation avec film, place
  *
  * id = id de la classe, clé primaire , auto-increment
- * nameCountry = nom du pays
+ * nameCountry = nom du pays,
  */
 @Entity
 @Table(name = "COUNTRY")
