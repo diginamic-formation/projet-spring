@@ -8,12 +8,15 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.util.HashMap;
+
 @SpringBootApplication
 public class DataBaseFillingApplication implements CommandLineRunner {
 
     @Autowired
     DataBaseInsertion dataBaseInsertion;
     public static void main(String[] args) {
+
         SpringApplication application = new SpringApplication(DataBaseFillingApplication.class);
         application.setWebApplicationType(WebApplicationType.NONE);
         application.run(args);
