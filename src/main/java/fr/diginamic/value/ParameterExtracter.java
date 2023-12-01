@@ -4,10 +4,10 @@ package fr.diginamic.value;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-@Component
+//@Component
 public class ParameterExtracter {
 
-    @Value("${file.path.acteurs}")
+   /* @Value("${file.path.acteurs}")
     private String filmPath;
     @Value("${file.path.realisateurs}")
     private String realisateurPath;
@@ -20,5 +20,5 @@ public class ParameterExtracter {
 
     @Value("${film_realisateurs.csv}")
     private String filmRealisateurPath;
-
+*/
 }
