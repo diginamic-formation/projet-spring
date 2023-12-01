@@ -16,7 +16,7 @@ public class DataBaseInsertion {
     ParameterExtracter parameterExtracter;
     public void insertFromFile(){
 
-        insert
+
 
 
     }
