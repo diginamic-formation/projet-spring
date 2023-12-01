@@ -3,6 +3,8 @@ package fr.diginamic.entities;
 import jakarta.persistence.*;
 
 import java.util.Objects;
+import java.util.Set;
+
 /**
  * Genre liste des genres de films
  * en relation avec film, place
@@ -19,6 +21,12 @@ public class Genre {
     @Column(name ="nameGenre")
     private String nameGenre;
 
+    @ManyToMany(mappedBy="genreSet")
+    private Set<Film> filmSet;
+
+
+
+    // Constructors **********************
     public Genre() {
     }
 
@@ -26,9 +34,9 @@ public class Genre {
         this.id = id;
     }
 
-    public Genre(int id, String nameGenre) {
-        this.id = id;
+    public Genre(String nameGenre, Set<Film> filmSet) {
         this.nameGenre = nameGenre;
+        this.filmSet = filmSet;
     }
 
     public int getId() {
@@ -47,11 +55,18 @@ public class Genre {
         this.nameGenre = nameGenre;
     }
 
+    public Set<Film> getFilmSet() {
+        return filmSet;
+    }
+
+    public void setFilmSet(Set<Film> filmSet) {
+        this.filmSet = filmSet;
+    }
+
     @Override
     public String toString() {
         return "Genre{" +
-                "id=" + id +
-                ", nameGenre='" + nameGenre + '\'' +
+                "nameGenre='" + nameGenre + '\'' +
                 '}';
     }
 
@@ -60,11 +75,11 @@ public class Genre {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Genre genre = (Genre) o;
-        return id == genre.id && Objects.equals(nameGenre, genre.nameGenre);
+        return Objects.equals(nameGenre, genre.nameGenre);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, nameGenre);
+        return Objects.hash(nameGenre);
     }
 }

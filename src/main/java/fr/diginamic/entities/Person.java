@@ -2,8 +2,11 @@ package fr.diginamic.entities;
 
 import jakarta.persistence.*;
 
+import javax.swing.*;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "PERSON")
@@ -11,11 +14,26 @@ public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column(name = "full_name")
     private String fullName;
     private Date birthday;
     private float height;
     private String url;
+    @Column(name = "reference_number")
     private String referenceNumber;
+
+
+    @OneToMany(mappedBy = "person")
+    private Set<Role> roleSet;
+
+    @ManyToOne
+    @JoinColumn(name = "place_id")
+    private Place place;
+
+
+    @ManyToMany(mappedBy="personSet")
+    private Set<Film> filmSet;
+
 
     // Constructors **********************************
     public Person() {
@@ -25,17 +43,18 @@ public class Person {
         this.id = id;
     }
 
-    public Person(int id, String fullName, Date birthday, float height, String url, String referenceNumber) {
-        this.id = id;
+    public Person(String fullName, Date birthday, float height, String url, String referenceNumber, Set<Role> roleSet, Place place, Set<Film> filmSet) {
         this.fullName = fullName;
         this.birthday = birthday;
         this.height = height;
         this.url = url;
         this.referenceNumber = referenceNumber;
+        this.roleSet = roleSet;
+        this.place = place;
+        this.filmSet = filmSet;
     }
 
 
-    // Getters and Setters ****************************
     public int getId() {
         return id;
     }
@@ -84,17 +103,35 @@ public class Person {
         this.referenceNumber = referenceNumber;
     }
 
+    public Set<Role> getRoleSet() {
+        return roleSet;
+    }
 
-    // Methods Overriding *******************************
+    public void setRoleSet(Set<Role> roleSet) {
+        this.roleSet = roleSet;
+    }
+
+    public Place getPlace() {
+        return place;
+    }
+
+    public void setPlace(Place place) {
+        this.place = place;
+    }
+
+    public Set<Film> getFilmSet() {
+        return filmSet;
+    }
+
+    public void setFilmSet(Set<Film> filmSet) {
+        this.filmSet = filmSet;
+    }
 
     @Override
     public String toString() {
         return "Person{" +
-                "id=" + id +
-                ", fullName='" + fullName + '\'' +
+                "fullName='" + fullName + '\'' +
                 ", birthday=" + birthday +
-                ", height=" + height +
-                ", url='" + url + '\'' +
                 ", referenceNumber='" + referenceNumber + '\'' +
                 '}';
     }
@@ -104,12 +141,11 @@ public class Person {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Person person = (Person) o;
-        return id == person.id && Float.compare(height, person.height) == 0 && Objects.equals(fullName, person.fullName) && Objects.equals(birthday, person.birthday) && Objects.equals(url, person.url) && Objects.equals(referenceNumber, person.referenceNumber);
+        return Objects.equals(fullName, person.fullName) && Objects.equals(birthday, person.birthday) && Objects.equals(referenceNumber, person.referenceNumber);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, fullName, birthday, height, url, referenceNumber);
+        return Objects.hash(fullName, birthday, referenceNumber);
     }
-
 }

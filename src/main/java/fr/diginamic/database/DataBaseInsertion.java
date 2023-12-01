@@ -5,9 +5,9 @@ import org.springframework.stereotype.Service;
 
 import fr.diginamic.value.ParameterExtracter;
 
-@Service
+//@Service
 public class DataBaseInsertion {
-	@Autowired
+//	@Autowired
 	ParameterExtracter parameterExtracter;
 
 	public void insertFromFile() {
