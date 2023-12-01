@@ -7,8 +7,7 @@ import java.util.Objects;
 /**
  * Country liste des pays
  * en relation avec film, place
- *
- * id = id de la classe, clé primaire , auto-increment
+  * id = id de la classe, clé primaire , auto-increment
  * nameCountry = nom du pays,
  */
 @Entity
