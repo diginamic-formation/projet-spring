@@ -1,5 +1,6 @@
 package fr.diginamic.database;
 
+import fr.diginamic.value.ParameterExtracter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.io.IOException;
@@ -10,15 +11,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Stream;
 
-@Service
+//@Service
 public class DataBaseInsertion {
 
     @Autowired
     ParameterExtracter parameterExtracter;
     public void insertFromFile(){
-        insertActeurs() 
+        insertActeurs();
     }
-    public void insertAceurs() {
+    public void insertActeurs() {
         HashMap<Integer,Integer> structureFile = new HashMap<>();
         System.out.println("Lecture Fichier  : " +parameterExtracter.getActeurPath());
         Path acteurPath = Paths.get(parameterExtracter.getActeurPath());
