@@ -7,7 +7,6 @@ import fr.diginamic.value.ParameterExtracter;
 
 @Service
 public class DataBaseInsertion {
-
 	@Autowired
 	ParameterExtracter parameterExtracter;
 
