@@ -21,4 +21,22 @@ public class ParameterExtracter {
 
     @Value("${file.path.film.realisateurs}")
     private String filmRealisateurPath;
+
+
+    public String getFilmPath() {
+        return filmPath;
+    }
+
+    public String getRealisateurPath() {
+        return realisateurPath;
+    }
+    public String getActeurPath() {
+        return acteurPath;
+    }
+    public String getRolePath() {
+        return rolePath;
+    }
+    public String getFilmRealisateurPath() {
+        return filmRealisateurPath;
+    }
 }

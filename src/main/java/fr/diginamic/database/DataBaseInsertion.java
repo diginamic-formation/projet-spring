@@ -1,44 +1,42 @@
 package fr.diginamic.database;
 
+
+import fr.diginamic.entities.Person;
 import fr.diginamic.value.ParameterExtracter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+
 import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Stream;
 
 //@Service
 public class DataBaseInsertion {
 
+    @Autowired
+    FileDataLoader fileDataLoader;
     @Autowired
     ParameterExtracter parameterExtracter;
     public void insertFromFile(){
         insertActeurs();
     }
     public void insertActeurs() {
-        HashMap<Integer,Integer> structureFile = new HashMap<>();
-        System.out.println("Lecture Fichier  : " +parameterExtracter.getActeurPath());
-        Path acteurPath = Paths.get(parameterExtracter.getActeurPath());
-        try{
-            Stream<String> lines = Files.lines(acteurPath);
-            lines.forEach(line ->{
-                int size = line.split(";").length;
-                System.out.println(size);
-                if(structureFile.get(size) == null){
-                    structureFile.put(size,1);
-                }else{
-                    structureFile.put(size,structureFile.get(size)+1);
-                }
-            });
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-     
-	System.out.println(structureFile);
+        List<Person> acteurs =  fileDataLoader.extractActors(parameterExtracter.getActeurPath());
     }
+
+    public void insertRealisateurs(){
+        List<Person> realisateurs = fileDataLoader.extractRealisateurs(parameterExtracter.getRealisateurPath());
+    }
+
+    public void insertFilms(){
+        List<Film> films = fileDataLoader.extractFilms(parameterExtracter.getFilmPath());
+    }
+
+    public void insertRole(){
+        List<Role>  roles = fileDataLoader.extractRoles(parameterExtracter.getRolePath());
+    }
+
+    public void insertRealisations(){
+        HashMap<Film, List<Person>> realisations = fileDataLoader.extractRealisations(parameterExtracter.getFilmRealisateurPath());
+    }
+
 }
