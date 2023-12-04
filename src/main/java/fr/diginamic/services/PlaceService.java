@@ -46,12 +46,24 @@ public class PlaceService {
 
     public String updatePlace(int id, Place updatedPlace) {
         Optional<Place> upPlace = placeRepository.findById(id);
-        if(upPlace.isPresent()){
-            Place place = upPlace.get();
+        Place place = upPlace.get();
+        if(place!=null){
             place.setNamePlace(updatedPlace.getNamePlace());
             placeRepository.save(place);
             return "updated";
         }
         return "not found";
     }
+
+    public String deletePlaceById(int id) {
+        Optional<Place> delPlace = placeRepository.findById(id);
+        Place place = delPlace.get();
+        if(place!=null){
+
+            placeRepository.deleteById(id);
+            return "Deleted";
+        }
+        return "not found";
+    }
+
 }

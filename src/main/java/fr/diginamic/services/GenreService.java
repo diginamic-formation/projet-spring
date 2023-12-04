@@ -44,8 +44,8 @@ public class GenreService {
     }
     public String updateGenre(int id, Genre updatedGenre) {
         Optional<Genre> upGenre = genreRepository.findById(id);
-        if(upGenre.isPresent()){
-            Genre genre = upGenre.get();
+        Genre genre = upGenre.get();
+        if(genre !=null){
             genre.setNameGenre(updatedGenre.getNameGenre());
             genreRepository.save(genre);
             return "updated";
@@ -54,4 +54,15 @@ public class GenreService {
     }
 
 
+    public String deleteGenreById(int id) {
+           Optional<Genre> genre = genreRepository.findById(id);
+            Genre delGenre = genre.get();
+            if(delGenre !=null) {
+              genreRepository.deleteById(id);
+                return "Deleted";
+            }
+            return "not found";
+    }
+
 }
+

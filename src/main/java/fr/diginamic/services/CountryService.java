@@ -34,20 +34,30 @@ public class CountryService {
         return countryDto;
     }
     ///new country
-    public CountryDto save(Country newCountry) {
+    public CountryDto save(@RequestBody Country newCountry) {
         Country country =countryRepository.save(newCountry);
         CountryDto countryDto = new CountryDto(country);
         return countryDto;
 
     }
 
-    public String updateCountry(int id, Country updatedCountry) {
+    public String updateCountry(int id, @RequestBody Country updatedCountry) {
         Optional<Country> upCountry = countryRepository.findById(id);
-        if(upCountry.isPresent()){
-            Country country = upCountry.get();
+        Country country = upCountry.get();
+        if(country !=null){
             country.setNameCountry(updatedCountry.getNameCountry());
             countryRepository.save(country);
             return "updated";
+        }
+        return "not found";
+    }
+
+    public String deleteCountryById(int id) {
+        Optional<Country> country = countryRepository.findById(id);
+        Country delCountry = country.get();
+        if(delCountry !=null) {
+            countryRepository.deleteById(id);
+            return "Deleted";
         }
         return "not found";
     }

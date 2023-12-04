@@ -33,10 +33,17 @@ public class GenreController {
 
  @PutMapping
  public GenreDto insertGenre(@RequestBody Genre newGenre) {
+
         return genreService.save(newGenre);
  }
-    @PostMapping("/update/{id}")
+ @PostMapping("/update/{id}")
     public String updateGenre(@PathVariable int id, @RequestBody Genre updatedGenre){
         return genreService.updateGenre(id, updatedGenre);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public String deleteCountryById(@PathVariable int id){
+
+        return genreService.deleteGenreById(id);
     }
 }
