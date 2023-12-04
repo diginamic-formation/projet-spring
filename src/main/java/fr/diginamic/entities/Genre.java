@@ -34,6 +34,10 @@ public class Genre {
         this.id = id;
     }
 
+    public Genre(String nameGenre) {
+        this.nameGenre = nameGenre;
+    }
+
     public Genre(String nameGenre, Set<Film> filmSet) {
         this.nameGenre = nameGenre;
         this.filmSet = filmSet;

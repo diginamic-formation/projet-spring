@@ -31,6 +31,10 @@ public class Language {
         this.id = id;
     }
 
+    public Language(String nameLanguage) {
+        this.nameLanguage = nameLanguage;
+    }
+
     public Language(String nameLanguage, Set<Film> filmSet) {
         this.nameLanguage = nameLanguage;
         this.filmSet = filmSet;

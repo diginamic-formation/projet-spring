@@ -8,6 +8,8 @@ import java.util.Optional;
 @Repository
 public interface PersonRepository extends CrudRepository<Person, Integer> {
 
+    Person getByReferenceNumber(String referenceNumber);
+
 
 
 }

@@ -7,5 +7,6 @@ import fr.diginamic.entities.Film;
 
 @Repository
 public interface FilmRepository extends CrudRepository<Film, Integer> {
-
+    Film findByReferenceNumber(String referenceNumber);
+    Film findByTitle(String title);
 }

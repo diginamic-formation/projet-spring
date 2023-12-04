@@ -15,7 +15,7 @@ public class Film {
 
     private String title;
 
-    private float rating;
+    private Float rating;
 
     private String url;
 
@@ -64,7 +64,7 @@ public class Film {
         this.id = id;
     }
 
-    public Film(String title, float rating, String url, String summary, int yearStart, int yearEnd, String referenceNumber, Language language, Set<Role> roleSet, Country country, Place place, Set<Genre> genreSet, Set<Person> personSet) {
+    public Film(String title, Float rating, String url, String summary, int yearStart, int yearEnd, String referenceNumber, Language language, Set<Role> roleSet, Country country, Place place, Set<Genre> genreSet, Set<Person> personSet) {
         this.title = title;
         this.rating = rating;
         this.url = url;
@@ -80,7 +80,7 @@ public class Film {
         this.personSet = personSet;
     }
 
-    public Film(String title, float rating, String url, String summary, int yearStart, int yearEnd, String referenceNumber) {
+    public Film(String title, Float rating, String url, String summary, int yearStart, int yearEnd, String referenceNumber) {
         this.title = title;
         this.rating = rating;
         this.url = url;
@@ -106,11 +106,11 @@ public class Film {
         this.title = title;
     }
 
-    public float getRating() {
+    public Float getRating() {
         return rating;
     }
 
-    public void setRating(float rating) {
+    public void setRating(Float rating) {
         this.rating = rating;
     }
 

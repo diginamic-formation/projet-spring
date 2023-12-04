@@ -1,34 +1,47 @@
 package fr.diginamic.database;
 
 
+import fr.diginamic.database.insertions.FilmInsertionManager;
+import fr.diginamic.database.insertions.PersonInsertionManager;
+import fr.diginamic.entities.Film;
 import fr.diginamic.entities.Person;
+import fr.diginamic.entities.Role;
 import fr.diginamic.value.ParameterExtracter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
-//@Service
+@Service
 public class DataBaseInsertion {
 
     @Autowired
-    FileDataLoader fileDataLoader;
+    private FilmInsertionManager filmInsertionManager;
     @Autowired
-    ParameterExtracter parameterExtracter;
+    private PersonInsertionManager personInsertionManager;
+    @Autowired
+    private FileDataLoader fileDataLoader;
+    @Autowired
+    private ParameterExtracter parameterExtracter;
     public void insertFromFile(){
         insertActeurs();
+        insertRealisateurs();
+        insertFilms();
+        insertRealisations();
     }
     public void insertActeurs() {
         List<Person> acteurs =  fileDataLoader.extractActors(parameterExtracter.getActeurPath());
+        personInsertionManager.insertPersonInDataBase(acteurs);
     }
 
     public void insertRealisateurs(){
         List<Person> realisateurs = fileDataLoader.extractRealisateurs(parameterExtracter.getRealisateurPath());
+        personInsertionManager.insertPersonInDataBase(realisateurs);
     }
 
     public void insertFilms(){
         List<Film> films = fileDataLoader.extractFilms(parameterExtracter.getFilmPath());
+        filmInsertionManager.insertFilmIndDataBase(films);
     }
 
     public void insertRole(){
@@ -36,7 +49,7 @@ public class DataBaseInsertion {
     }
 
     public void insertRealisations(){
-        HashMap<Film, List<Person>> realisations = fileDataLoader.extractRealisations(parameterExtracter.getFilmRealisateurPath());
+        Map<String, Set<String>> mapFilmRealisateurs = fileDataLoader.extractRealisations(parameterExtracter.getFilmRealisateurPath());
     }
 
 }

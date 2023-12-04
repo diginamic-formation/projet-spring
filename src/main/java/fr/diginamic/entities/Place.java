@@ -41,6 +41,10 @@ public class Place {
         this.id = id;
     }
 
+    public Place(String namePlace) {
+        this.namePlace = namePlace;
+    }
+
     public Place(String namePlace, Country country, Set<Film> filmSet, Set<Person> personSet) {
         this.namePlace = namePlace;
         this.country = country;

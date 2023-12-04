@@ -17,7 +17,7 @@ public class Person {
     @Column(name = "full_name")
     private String fullName;
     private Date birthday;
-    private float height;
+    private Float height;
     private String url;
     @Column(name = "reference_number")
     private String referenceNumber;
@@ -43,7 +43,7 @@ public class Person {
         this.id = id;
     }
 
-    public Person(String fullName, Date birthday, float height, String url, String referenceNumber, Set<Role> roleSet, Place place, Set<Film> filmSet) {
+    public Person(String fullName, Date birthday, Float height, String url, String referenceNumber, Set<Role> roleSet, Place place, Set<Film> filmSet) {
         this.fullName = fullName;
         this.birthday = birthday;
         this.height = height;
@@ -79,11 +79,11 @@ public class Person {
         this.birthday = birthday;
     }
 
-    public float getHeight() {
+    public Float getHeight() {
         return height;
     }
 
-    public void setHeight(float height) {
+    public void setHeight(Float height) {
         this.height = height;
     }
 

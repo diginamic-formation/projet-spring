@@ -37,6 +37,10 @@ public class Country {
         this.id = id;
     }
 
+    public Country(String nameCountry) {
+        this.nameCountry = nameCountry;
+    }
+
     public Country(String nameCountry, Set<Film> filmSet, Set<Place> placeSet) {
         this.nameCountry = nameCountry;
         this.filmSet = filmSet;
@@ -80,9 +84,7 @@ public class Country {
     public String toString() {
         return "Country{" +
                 "id=" + id +
-                ", nameCountry='" + nameCountry + '\'' +
-                ", filmSet=" + filmSet +
-                ", placeSet=" + placeSet +
+                ", nameCountry='" + nameCountry +
                 '}';
     }
 
