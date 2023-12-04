@@ -41,7 +41,7 @@ public class PlaceController {
     public String updatePlace(@PathVariable int id, @RequestBody Place updatedPlace){
         return placeService.updatePlace(id, updatedPlace);
     }
-    
+
     @DeleteMapping("/delete/{id}")
     public String deletePlaceById(@PathVariable int id){
 

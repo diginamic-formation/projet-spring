@@ -25,7 +25,7 @@ public class CountryController {
    @GetMapping("/country/nameCountry")
    public CountryDto getCountryByNam(@PathVariable String nameCountry){
 
-      return countryService.getCountryByName(nameCountry);
+      return countryService.getCountryByNameCountry(nameCountry);
    }
 
    @PutMapping
