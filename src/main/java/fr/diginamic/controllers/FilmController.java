@@ -1,4 +1,4 @@
-package fr.diginamic.controleurs;
+package fr.diginamic.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -8,7 +8,7 @@ import fr.diginamic.services.FilmService;
 
 @RestController
 @RequestMapping
-public class FilmControleur {
+public class FilmController {
 	@Autowired
 	private FilmService filmService;
 }
