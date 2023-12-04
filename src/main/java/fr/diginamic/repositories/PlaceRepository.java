@@ -9,6 +9,5 @@ import java.util.List;
 
 @Repository
 public interface PlaceRepository extends CrudRepository<Place, Integer> {
-
-    List<Place> findByNamePlace(String namePlace);
+    Place findByNamePlace(String namePlace);
 }

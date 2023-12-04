@@ -8,10 +8,6 @@ import java.util.List;
 
 @Repository
 public interface CountryRepository extends CrudRepository<Country, Integer> {
-
-
-    List<Country> findByNameCountry(String nameCountry);
-
-
+    Country findByNameCountry(String nameCountry);
 
 }

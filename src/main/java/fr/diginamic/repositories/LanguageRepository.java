@@ -9,10 +9,6 @@ import java.util.List;
 
 @Repository
 public interface LanguageRepository extends CrudRepository<Language, Integer> {
-
-
-    List<Language> findByNameLanguage(String nameLanguage);
-
-
+    Language findByNameLanguage(String nameLanguage);
 
 }

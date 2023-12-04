@@ -9,5 +9,5 @@ import java.util.List;
 @Repository
 public interface GenreRepository extends CrudRepository<Genre, Integer> {
 
-    List<Genre> findByNameGenre(String nameGenre);
+    Genre findByNameGenre(String nameGenre);
 }
