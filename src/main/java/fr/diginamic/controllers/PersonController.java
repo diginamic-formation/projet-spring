@@ -1,6 +1,8 @@
 package fr.diginamic.controllers;
 
+import fr.diginamic.dto.GenreFilmDto;
 import fr.diginamic.dto.PersonDto;
+import fr.diginamic.dto.PersonFilmDto;
 import fr.diginamic.entities.Person;
 import fr.diginamic.services.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,5 +49,8 @@ public class PersonController {
         return personService.deletePerson(id);
 
     }
-
+    @GetMapping("/filmRealisator/{namePerson}")
+    public PersonFilmDto getfilmRealisatorByName(@PathVariable String namePerson){
+        return personService.getfilmRealisatorByName(namePerson);
+    }
 }

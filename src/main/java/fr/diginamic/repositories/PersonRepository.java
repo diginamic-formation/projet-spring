@@ -11,6 +11,8 @@ public interface PersonRepository extends CrudRepository<Person, Integer> {
 
     Person getByReferenceNumber(String referenceNumber);
 
+    Person findByFullName(String namePerson);
+
 
 
 

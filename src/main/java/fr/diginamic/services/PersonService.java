@@ -1,6 +1,9 @@
 package fr.diginamic.services;
 
+import fr.diginamic.dto.GenreFilmDto;
 import fr.diginamic.dto.PersonDto;
+import fr.diginamic.dto.PersonFilmDto;
+import fr.diginamic.entities.Genre;
 import fr.diginamic.entities.Person;
 import fr.diginamic.repositories.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,4 +87,12 @@ public class PersonService {
         return "This Person does not exists in the database";
     }
 
+    public PersonFilmDto getfilmRealisatorByName(String namePerson) {
+        Person person = personRepository.findByFullName(namePerson);
+        if(person !=null){
+            PersonFilmDto personFilmDto = new PersonFilmDto(person);
+            return personFilmDto;
+        }
+        return null;
+    }
 }

@@ -22,9 +22,9 @@ public class CountryController {
       return countryService.getAll();
    }
 
-   @GetMapping("/country/nameCountry")
-   public CountryDto getCountryByNam(@PathVariable String nameCountry){
-
+   @GetMapping("/country/{nameCountry}")
+   public CountryDto getCountryByNameCountry(@PathVariable String nameCountry){
+      System.out.println("coutrny");
       return countryService.getCountryByNameCountry(nameCountry);
    }
 
