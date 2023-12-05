@@ -34,6 +34,8 @@ public class ConstantUtils {
     public static final int FILM_LANGUAGE_COLUMN_ORDER = 7;
     public static final int FILM_SUMMARY_COLUMN_ORDER = 8;
     public static final int FILM_COUNTRY_COLUMN_ORDER = 9;
+
+    public static final String FILM_YEAR_SEPARATOR_REGEX="\\D";
     public static final int ROLE_FILM_ID_COLUMN_ORDER = 0;
     public static final int ROLE_PERSON_ID_COLUMN_ORDER = 1;
     public static final int ROLE_ROLE_NAME_COLUMN_ORDER = 2;

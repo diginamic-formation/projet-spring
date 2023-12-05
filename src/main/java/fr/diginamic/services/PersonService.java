@@ -37,8 +37,8 @@ public class PersonService {
     }
 
     public PersonDto getPersonByImdb(String imdb) {
-        Person person = personRepository.getByReferenceNumber(imdb);
-        if (person != null) {
+        Person person = personRepository.findByReferenceNumber(imdb);
+        if(person != null){
             PersonDto personDto = new PersonDto(person);
             return personDto;
         }

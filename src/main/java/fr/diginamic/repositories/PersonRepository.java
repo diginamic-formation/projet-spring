@@ -1,15 +1,19 @@
 package fr.diginamic.repositories;
 
 import fr.diginamic.entities.Person;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
-
-import java.util.Optional;
+import java.util.Set;
 
 @Repository
 public interface PersonRepository extends CrudRepository<Person, Integer> {
 
-    Person getByReferenceNumber(String referenceNumber);
+    Person findByReferenceNumber(String referenceNumber);
+
+    @Query("SELECT p FROM Person p WHERE p.referenceNumber IN (:references)")
+    Set<Person> getByReferenceList(Set<String> references);
+
 
 
 

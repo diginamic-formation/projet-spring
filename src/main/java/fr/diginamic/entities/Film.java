@@ -19,11 +19,12 @@ public class Film {
 
     private String url;
 
+    @Column(columnDefinition="TEXT")
     private String summary;
     @Column(name = "year_start")
-    private int yearStart;
+    private Integer yearStart;
     @Column(name = "year_end")
-    private int yearEnd;
+    private Integer yearEnd;
     @Column(name = "reference_number")
     private String referenceNumber;
 
@@ -64,7 +65,7 @@ public class Film {
         this.id = id;
     }
 
-    public Film(String title, Float rating, String url, String summary, int yearStart, int yearEnd, String referenceNumber, Language language, Set<Role> roleSet, Country country, Place place, Set<Genre> genreSet, Set<Person> personSet) {
+    public Film(String title, Float rating, String url, String summary, Integer yearStart, Integer yearEnd, String referenceNumber, Language language, Set<Role> roleSet, Country country, Place place, Set<Genre> genreSet, Set<Person> personSet) {
         this.title = title;
         this.rating = rating;
         this.url = url;
@@ -80,7 +81,7 @@ public class Film {
         this.personSet = personSet;
     }
 
-    public Film(String title, Float rating, String url, String summary, int yearStart, int yearEnd, String referenceNumber) {
+    public Film(String title, Float rating, String url, String summary, Integer yearStart, Integer yearEnd, String referenceNumber) {
         this.title = title;
         this.rating = rating;
         this.url = url;
@@ -130,19 +131,19 @@ public class Film {
         this.summary = summary;
     }
 
-    public int getYearStart() {
+    public Integer getYearStart() {
         return yearStart;
     }
 
-    public void setYearStart(int yearStart) {
+    public void setYearStart(Integer yearStart) {
         this.yearStart = yearStart;
     }
 
-    public int getYearEnd() {
+    public Integer getYearEnd() {
         return yearEnd;
     }
 
-    public void setYearEnd(int yearEnd) {
+    public void setYearEnd(Integer yearEnd) {
         this.yearEnd = yearEnd;
     }
 
