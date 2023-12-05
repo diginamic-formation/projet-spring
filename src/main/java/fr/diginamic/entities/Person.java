@@ -1,7 +1,6 @@
 package fr.diginamic.entities;
 
 import jakarta.persistence.*;
-
 import javax.swing.*;
 import java.util.Date;
 import java.util.List;
@@ -22,14 +21,12 @@ public class Person {
     @Column(name = "reference_number")
     private String referenceNumber;
 
-
-    @OneToMany(mappedBy = "person")
-    private Set<Role> roleSet;
-
     @ManyToOne
     @JoinColumn(name = "place_id")
     private Place place;
 
+    @OneToMany(mappedBy = "person")
+    private Set<Role> roleSet;
 
     @ManyToMany(mappedBy="personSet")
     private Set<Film> filmSet;
