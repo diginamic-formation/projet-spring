@@ -4,10 +4,7 @@ import fr.diginamic.dto.PersonDto;
 import fr.diginamic.entities.Person;
 import fr.diginamic.services.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,19 +16,35 @@ public class PersonController {
     private PersonService personService;
 
     @GetMapping
-    public List<PersonDto> getPersons(){
+    public List<PersonDto> getPersons() {
         return personService.getALL();
 
     }
 
     @GetMapping("/{id}")
-    public PersonDto getPerson(@PathVariable int id){
+    public PersonDto getPerson(@PathVariable int id) {
         return personService.getPersonById(id);
     }
 
     @GetMapping("imdb/{imdb}")
-    public PersonDto getPersonByImdb(@PathVariable String imdb){
+    public PersonDto getPersonByImdb(@PathVariable String imdb) {
         return personService.getPersonByImdb(imdb);
+    }
+
+    @PutMapping
+    public PersonDto insertPerson(@RequestBody Person newPerson) {
+        return personService.savePerson(newPerson);
+    }
+
+    @PostMapping("/{id}")
+    public String updatePerson(@PathVariable int id, @RequestBody Person personUpdated) {
+        return personService.updatePerson(id, personUpdated);
+    }
+
+    @DeleteMapping("/{id}")
+    public String deletePerson(@PathVariable int id) {
+        return personService.deletePerson(id);
+
     }
 
 }
