@@ -8,7 +8,8 @@ import fr.diginamic.entities.Country;
 @Repository
 public interface CountryRepository extends CrudRepository<Country, Integer> {
 
-	Country findByNameCountry(String nameCountry);
+  Country findByNameCountry(String nameCountry);
 
-	Country deleteById(int id);
+  Country deleteById(int id);
+
 }

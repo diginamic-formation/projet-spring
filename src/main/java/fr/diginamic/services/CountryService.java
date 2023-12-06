@@ -28,18 +28,18 @@ public class CountryService {
 		return countriesDto;
 	}
 
-	public CountryDto getCountryByName(String nameCountry) {
-		Country country = countryRepository.findByNameCountry(nameCountry);
-		CountryDto countryDto = new CountryDto(country);
-		return countryDto;
-	}
+    public CountryDto getCountryByNameCountry(String nameCountry) {
+
+        Country country =countryRepository.findByNameCountry(nameCountry);
+        CountryDto countryDto = new CountryDto(country);
+        return countryDto;
+    }
 
 	/// new country
 	public CountryDto save(@RequestBody Country newCountry) {
 		Country country = countryRepository.save(newCountry);
 		CountryDto countryDto = new CountryDto(country);
 		return countryDto;
-
 	}
 
 	public String updateCountry(int id, @RequestBody Country updatedCountry) {

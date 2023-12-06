@@ -45,8 +45,9 @@ public class LanguageController {
 		return languageService.getLanguageByName(nameLanguage);
 	}
 
-	@PutMapping
-	public LanguageDto insertLanguage(@RequestBody Language newLanguage) {
+    @PutMapping
+    public LanguageDto insertLanguage(@RequestBody Language newLanguage){
+
 
 		return languageService.save(newLanguage);
 	}

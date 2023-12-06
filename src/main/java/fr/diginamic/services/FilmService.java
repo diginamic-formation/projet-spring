@@ -4,6 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+
+import fr.diginamic.dto.SimplePersonDto;
+import fr.diginamic.entities.Person;
+
+import fr.diginamic.dto.SimpleFilmDto;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,6 +48,16 @@ public class FilmService {
 	}
 
 	// Un film par son titre
+	public List<SimplePersonDto> getActorsFilmById(int id1, int id2) {
+
+		List<Person> persons = filmRepository.findCommonPersonInFilms(id1,id2);
+		List<SimplePersonDto> personsDto= new ArrayList<>();
+		for(Person person : persons){
+			personsDto.add(new SimplePersonDto(person));
+		}
+		return personsDto;
+	}
+
 	public FilmDto getFindByTitle(String title) {
 		Film film = filmRepository.findByTitle(title);
 		if (film != null) {
@@ -64,7 +80,6 @@ public class FilmService {
 	// Insérer un film
 	public void insertFilm(Film nwFilm) {
 		filmRepository.save(nwFilm);
-
 	}
 
 	// Modifier un film
@@ -110,4 +125,9 @@ public class FilmService {
 		}
 		return filmsActorDto;
 	}
+
+	public List<SimpleFilmDto> getSimpleFilmsDtoByPeriod(int startYear, int endYear) {
+		return filmRepository.getSimpleFilmsDtoByPeriod(startYear, endYear);
+	}
+  
 }

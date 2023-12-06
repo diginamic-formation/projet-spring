@@ -2,6 +2,7 @@ package fr.diginamic.services;
 
 import fr.diginamic.dto.CountryDto;
 import fr.diginamic.dto.GenreDto;
+import fr.diginamic.dto.GenreFilmDto;
 import fr.diginamic.entities.Country;
 import fr.diginamic.entities.Genre;
 import fr.diginamic.repositories.GenreRepository;
@@ -21,20 +22,34 @@ public class GenreService {
     public List<GenreDto> getAll() {
 
         Iterable <Genre> genres = genreRepository.findAll();
-        List<GenreDto> genreDto = new ArrayList<>();
+        List<GenreDto> genresDto = new ArrayList<>();
         for(Genre genre : genres){
-             genreDto = (List<GenreDto>) new GenreDto(genre);
-            genreDto.add((GenreDto) genreDto);
+             GenreDto genreDto =  new GenreDto(genre);
+            genresDto.add( genreDto);
 
         }
-        return  genreDto;
+        return  genresDto;
     }
 
-    public GenreDto getGenreByName(String name) {
-       Genre genre = genreRepository.findByNameGenre(name);
-       GenreDto genreDto = new GenreDto(genre);
-       return genreDto;
+    public GenreFilmDto getGenreByName(String name) {
+        Genre genre = genreRepository.findByNameGenre(name);
+        if(genre !=null) {
+            GenreFilmDto genreFilmDto = new GenreFilmDto(genre);
+            return genreFilmDto;
+        }
+        return null;
     }
+    public GenreFilmDto getfilmGenreById(int id) {
+        Optional<Genre> optionalGenre = genreRepository.findById(id);
+       if(optionalGenre.isPresent()){
+           Genre genre = optionalGenre.get();
+           GenreFilmDto genreFilmDto = new GenreFilmDto(genre);
+           return genreFilmDto;
+       }
+       return null;
+    }
+
+
 
     public GenreDto save(Genre newGenre) {
             Genre genre  =genreRepository.save(newGenre);
@@ -63,6 +78,7 @@ public class GenreService {
             }
             return "not found";
     }
+
 
 }
 

@@ -11,19 +11,20 @@ import fr.diginamic.database.DataBaseInsertion;
 @SpringBootApplication
 public class DataBaseFillingApplication {
 
-	@Autowired
-	DataBaseInsertion dataBaseInsertion;
+    @Autowired
+    DataBaseInsertion dataBaseInsertion;
 
-	public static void main(String[] args) {
-		System.out.println("démargge application DataBaseFillingApplication");
-		SpringApplication application = new SpringApplication(DataBaseFillingApplication.class);
-		application.setWebApplicationType(WebApplicationType.NONE);
-		ConfigurableApplicationContext context = application.run();
-		DataBaseFillingApplication dataBaseApp = context.getBean(DataBaseFillingApplication.class);
-		dataBaseApp.startImport();
-	}
+    public static void main(String[] args) {
+        System.out.println("démargge application DataBaseFillingApplication");
+        SpringApplication application = new SpringApplication(DataBaseFillingApplication.class);
+        application.setWebApplicationType(WebApplicationType.NONE);
+        ConfigurableApplicationContext context = application.run();
+        DataBaseFillingApplication dataBaseApp = context.getBean(DataBaseFillingApplication.class);
+        dataBaseApp.startImport();
+    }
 
-	private void startImport() {
-		dataBaseInsertion.insertFromFile();
-	}
+    private void startImport() {
+        dataBaseInsertion.insertFromFile();
+    }
+
 }
