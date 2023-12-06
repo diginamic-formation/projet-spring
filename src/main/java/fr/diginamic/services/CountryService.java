@@ -29,7 +29,7 @@ public class CountryService {
     }
 
     public CountryDto getCountryByName(String nameCountry) {
-        Country country =countryRepository.getCountryByName(nameCountry);
+        Country country =countryRepository.findByNameCountry(nameCountry);
         CountryDto countryDto = new CountryDto(country);
         return countryDto;
     }

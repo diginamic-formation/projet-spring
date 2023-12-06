@@ -23,6 +23,8 @@ public class RoleInsertionManager {
 
 
     public void insertRoleInDataBase(List<Role> roles) {
+        System.out.println("---------------------------------------");
+        System.out.println(roles.size() + "  films to insert");
         for (Role role : roles) {
             Film film = filmRepository.findByReferenceNumber(role.getFilm().getReferenceNumber());
             Person person = personRepository.findByReferenceNumber(role.getPerson().getReferenceNumber());
@@ -35,6 +37,7 @@ public class RoleInsertionManager {
                 }
             }
         }
+        System.out.println("Role Insertion DONE !!!");
     }
 
 }

@@ -33,7 +33,7 @@ public class LanguageController {
 
     /////Recherche par un language de film
 
-    @GetMapping("/language/{nameLanguage")
+    @GetMapping("/language/{nameLanguage}")
     public LanguageDto getLanguageByName(@PathVariable String nameLanguage){
         return languageService.getLanguageByName(nameLanguage);
     }

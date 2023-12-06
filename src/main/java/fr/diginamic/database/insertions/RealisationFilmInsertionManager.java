@@ -21,6 +21,8 @@ public class RealisationFilmInsertionManager {
     private PersonRepository personRepository;
 
     public void insertRealisationsInDataBase(Map<String, Set<String>> map) {
+        System.out.println("---------------------------------------");
+        System.out.println(map.size() + "  films to insert");
         for (String filmReferenceNumber : map.keySet()){
             Film film = filmRepository.findByReferenceNumber(filmReferenceNumber);
             Set<Person> realisators = personRepository.getByReferenceList(map.get(filmReferenceNumber));
@@ -29,6 +31,6 @@ public class RealisationFilmInsertionManager {
                 filmRepository.save(film);
             }
         }
-
+        System.out.println("Film-Realisateur Insertion DONE !!!");
     }
 }

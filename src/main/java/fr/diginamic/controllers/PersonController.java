@@ -1,6 +1,9 @@
 package fr.diginamic.controllers;
 
+import fr.diginamic.dto.GenreDto;
 import fr.diginamic.dto.PersonDto;
+import fr.diginamic.dto.SimpleFilmDto;
+import fr.diginamic.entities.Genre;
 import fr.diginamic.entities.Person;
 import fr.diginamic.services.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,4 +51,19 @@ public class PersonController {
 
     }
 
+
+    @GetMapping("/{id}/films/year{min}{max}")
+    public List<SimpleFilmDto> getFilmsInYearsIntervalByActorId(@PathVariable int id,@RequestParam int min,@RequestParam int max ){
+        return personService.findFilmsActorIdAndYearInterval(id,min,max);
+    }
+
+    @GetMapping("/{id}/films/speciality")
+    public GenreDto getGenreSpecialityByActorId(@PathVariable int id){
+        return personService.getGenreSpecialityByActorId(id);
+    }
+
+    @GetMapping("/test")
+    public void getActorsByGenre(){
+        personService.getActorsByGenre();
+    }
 }

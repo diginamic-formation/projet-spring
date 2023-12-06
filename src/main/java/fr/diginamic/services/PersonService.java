@@ -1,13 +1,14 @@
 package fr.diginamic.services;
 
+import fr.diginamic.dto.GenreDto;
 import fr.diginamic.dto.PersonDto;
+import fr.diginamic.dto.SimpleFilmDto;
+import fr.diginamic.entities.Film;
+import fr.diginamic.entities.Genre;
 import fr.diginamic.entities.Person;
 import fr.diginamic.repositories.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.*;
 
@@ -84,4 +85,40 @@ public class PersonService {
         return "This Person does not exists in the database";
     }
 
+    public List<SimpleFilmDto> findFilmsActorIdAndYearInterval(int id, int yearMin, int yearMax) {
+        return personRepository.getFilmsByIdActorAndYearInterval(id,yearMin, yearMax);
+    }
+
+    public GenreDto getGenreSpecialityByActorId(int id) {
+        List<Film> films = personRepository.getGenreSpecialityByActorId(id);
+        Genre genre = extractMaxGenre(films);
+        return new GenreDto(genre);
+    }
+
+    public void getActorsByGenre(){
+        List<Object> result = personRepository.getActorsByGenre();
+        for (Object object : result){
+            Object[] columns = (Object[]) object;
+            System.out.println(columns[0] + "   " + columns[1] + "   "+columns[2] +"   " +columns[3]);
+        }
+    }
+
+    private Genre extractMaxGenre(List<Film> films) {
+        Map<Genre, Integer> mapGenreOccurence = new HashMap<>();
+        List<Genre> genres = new ArrayList<>();
+        Genre maxGenre = null;
+        int maxOccurence = 0;
+        films.forEach(film -> genres.addAll(film.getGenreSet()));
+        genres.forEach(genre -> {
+            mapGenreOccurence.merge(genre, 1, Integer::sum);
+        });
+        System.out.println(mapGenreOccurence);
+        for (Genre genre : mapGenreOccurence.keySet()){
+            if(maxOccurence < mapGenreOccurence.get(genre)){
+                maxGenre = genre;
+                maxOccurence = mapGenreOccurence.get(genre);
+            }
+        }
+        return maxGenre;
+    }
 }
