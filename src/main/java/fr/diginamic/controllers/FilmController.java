@@ -33,74 +33,70 @@ import java.util.List;
 @RestController
 @RequestMapping("/films")
 public class FilmController {
-	@Autowired
-	private FilmService filmService;
+    @Autowired
+    private FilmService filmService;
+    @GetMapping
+    public Iterable<FilmDto> getFilms() {
+        return filmService.getAll();
 
+    }
+    @GetMapping("/{id}")
+    public FilmDto getFilm(@PathVariable int id) {
 
-	@GetMapping
-	public Iterable<FilmDto> getFilms() {
-		return filmService.getAll();
+        return filmService.getFilmById(id);
+    }
+    @GetMapping("/title/{title}")
+    public FilmDto getFilmByTitle(@PathVariable String title) {
+        return filmService.getFindByTitle(title);
+    }
+    @GetMapping("/imdb/{imdb}")
+    public FilmDto getFilmByReferenceNumber(@PathVariable String imdb) {
+        return filmService.getFindByReferenceNumber(imdb);
+    }
 
-	}
+    /**
+     * Return the common actors in two different films
+     * @param id1 id film1
+     * @param id2 id film2
+     * @return the list of
+     */
+    @GetMapping("/{id1}/{id2}/actors")
+    public List<SimplePersonDto> getCommonActorsInFilmIds(@PathVariable int id1, @PathVariable int id2) {
+        return filmService.getActorsFilmById(id1, id2);
+    }
 
-	@GetMapping("/{id}")
-	public FilmDto getFilm(@PathVariable int id) {
+    @GetMapping("/{film_id}/roles")
+    public List<FilmRoleDto> getAllRoleByFilm(@PathVariable("film_id") Integer id) {
+        return filmService.getfindAllRoleByFilm(id);
+    }
 
-		return filmService.getFilmById(id);
-	}
+    @GetMapping("/films-communs")
+    public List<FilmActorDto> getAllFilmCommunTwoActors(@RequestParam("person1") Integer person1Id,@RequestParam("person2") Integer person2Id) {
+        return filmService.getFindAllFilmCommunTwoActors(person1Id, person2Id);
+    }
 
-	@GetMapping("/title/{title}")
-	public FilmDto getFilmByTitle(@PathVariable String title) {
-		return filmService.getFindByTitle(title);
+    @GetMapping("/period/year{startYear}{endYear}")
+    public List<SimpleFilmDto> getSimpleFilmsDtoByPeriod(@RequestParam int startYear, @RequestParam int endYear) {
+        return filmService.getSimpleFilmsDtoByPeriod(startYear, endYear);
+    }
 
-	}
+    @PutMapping
+    public String saveFilm(@RequestBody Film nvFilm) {
+        filmService.insertFilm(nvFilm);
+        return "La ville a été insérée avec succès";
 
-	@GetMapping("/referenceNumber/{referenceNumber}")
-	public FilmDto getFilmByReferenceNumber(@PathVariable String referenceNumber) {
-		return filmService.getFindByReferenceNumber(referenceNumber);
-	}
+    }
 
-	@GetMapping("/{id1}/{id2}/actors")
-	public List<SimplePersonDto> getActorsByFilmId(@PathVariable int id1, @PathVariable int id2){
+    @PostMapping("/{id}")
+    public String updateFilm(@PathVariable int id, @RequestBody Film filmUpdate) {
+        filmService.updateFilm(id, filmUpdate);
+        return "Le film a été mis à jour";
+    }
 
-		return filmService.getActorsFilmById(id1,id2);
-
-	}
-
-
-	@PutMapping
-	public String saveFilm(@RequestBody Film nvFilm) {
-		filmService.insertFilm(nvFilm);
-		return "La ville a été insérée avec succès";
-
-	}
-
-	@PostMapping("/{id}")
-	public String updateFilm(@PathVariable int id, @RequestBody Film filmUpdate) {
-		filmService.updateFilm(id, filmUpdate);
-		return "Le film a été mis à jour";
-	}
-
-	@DeleteMapping("/{id}")
-	public String deleteFilm(@PathVariable int id) {
-		filmService.deleteFilm(id);
-		return "Film supprimé";
-	}
-
-	@GetMapping("/{film_id}/roles")
-	public List<FilmRoleDto> getAllRoleByFilm(@PathVariable("film_id") Integer id) {
-		return filmService.getfindAllRoleByFilm(id);
-	}
-
-	@GetMapping("/films-communs")
-	public List<FilmActorDto> getAllFilmCommunTwoActors(@RequestParam("person1") Integer person1Id,
-			@RequestParam("person2") Integer person2Id) {
-		return filmService.getFindAllFilmCommunTwoActors(person1Id, person2Id);
-	}
-
-	@GetMapping("/period/year{startYear}{endYear}")
-	public List<SimpleFilmDto> getSimpleFilmsDtoByPeriod(@RequestParam int startYear, @RequestParam int endYear){
-		return filmService.getSimpleFilmsDtoByPeriod(startYear,endYear);
-	}
+    @DeleteMapping("/{id}")
+    public String deleteFilm(@PathVariable int id) {
+        filmService.deleteFilm(id);
+        return "Film supprimé";
+    }
 
 }

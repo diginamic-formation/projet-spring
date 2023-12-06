@@ -10,7 +10,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/country")
+@RequestMapping("/countries")
 public class CountryController {
 
    @Autowired
@@ -18,7 +18,6 @@ public class CountryController {
 
    @GetMapping
    public List<CountryDto> getCountries(){
-
       return countryService.getAll();
    }
 
@@ -26,6 +25,11 @@ public class CountryController {
    public CountryDto getCountryByNameCountry(@PathVariable String nameCountry){
       System.out.println("coutrny");
       return countryService.getCountryByNameCountry(nameCountry);
+   }
+
+   @GetMapping("/{id}")
+   public CountryDto getCountryById(@PathVariable int id){
+      return countryService.getCountryByCountryId(id);
    }
 
    @PutMapping

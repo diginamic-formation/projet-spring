@@ -62,4 +62,13 @@ public class CountryService {
 		}
 		return "not found";
 	}
+
+    public CountryDto getCountryByCountryId(int id) {
+    	Optional<Country> optionalCountry = countryRepository.findById(id);
+		if(optionalCountry.isPresent()){
+			Country country = optionalCountry.get();
+			return new CountryDto(country);
+		}
+		return null;
+	}
 }

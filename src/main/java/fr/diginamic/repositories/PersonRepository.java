@@ -42,9 +42,6 @@ public interface PersonRepository extends CrudRepository<Person, Integer> {
     List<Object> getActorsByGenre();
 
 
-    Person findByFullName(String namePerson);
-
-    //List<Person> findByName(String name);
     @Query("SELECT new fr.diginamic.dto.FilmDto(f) FROM Film f JOIN f.roleSet r JOIN r.person p WHERE p.id = :actorId")
     List<FilmDto> getAllFilmsByActorId(int actorId);
 
