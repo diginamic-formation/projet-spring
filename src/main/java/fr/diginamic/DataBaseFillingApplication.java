@@ -8,6 +8,10 @@ import org.springframework.context.ConfigurableApplicationContext;
 
 import fr.diginamic.database.DataBaseInsertion;
 
+/**
+ * Spring Application
+ * Read files.csv, connect to DataBase, Map data and insert them into the base
+ */
 @SpringBootApplication
 public class DataBaseFillingApplication {
 

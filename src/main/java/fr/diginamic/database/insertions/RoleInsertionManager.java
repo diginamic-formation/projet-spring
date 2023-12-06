@@ -11,6 +11,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * @author insert a link between Actor and film
+ */
 @Service
 public class RoleInsertionManager {
 
@@ -21,7 +24,11 @@ public class RoleInsertionManager {
     @Autowired
     private RoleRepository roleRepository;
 
-
+    /**
+     * for each role, we get the (roleName, idPerson, idFilm)
+     * we check if the role doesn't exist in the database before the insertion
+     * @param roles
+     */
     public void insertRoleInDataBase(List<Role> roles) {
         System.out.println("---------------------------------------");
         System.out.println(roles.size() + "  films to insert");

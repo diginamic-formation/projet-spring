@@ -11,7 +11,10 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-
+/**
+ * Insert link between realisators and films into database
+ * @author MENTSEUR Fares
+ */
 @Service
 public class RealisationFilmInsertionManager {
 
@@ -20,6 +23,12 @@ public class RealisationFilmInsertionManager {
     @Autowired
     private PersonRepository personRepository;
 
+    /**
+     * inset a realisation
+     * Using the keyset of map we obtain all films
+     * For each key, we obtain a list of realisator linked to a film
+     * @param map a map(acteur id, Set<realisator id>)
+     */
     public void insertRealisationsInDataBase(Map<String, Set<String>> map) {
         System.out.println("---------------------------------------");
         System.out.println(map.size() + "  films to insert");

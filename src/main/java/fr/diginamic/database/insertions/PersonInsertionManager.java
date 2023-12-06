@@ -12,6 +12,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Insert persons into database
+ * @author MENTSEUR Fares
+ */
 @Service
 public class PersonInsertionManager {
 
@@ -22,6 +26,12 @@ public class PersonInsertionManager {
     @Autowired
     private PlaceRepository placeRepository;
 
+    /**
+     * Use a loop to insert persons
+     * for each film, insert different children and finally insert film
+     * @param persons
+     * @param type to indicate if it is an actor or a realisator
+     */
     public void insertPersonInDataBase(List<Person> persons, int type) {
         String personType = (type == ConstantUtils.ACTOR_PERSON) ? "Actors" : "Realisators";
         System.out.println("---------------------------------------");
@@ -35,6 +45,11 @@ public class PersonInsertionManager {
 
     }
 
+    /**
+     * Insert person
+     * test if there is already the same integrated
+     * @param person
+     */
     private void insertPerson(Person person) {
 
         Person personDataBase = personRepository.findByReferenceNumber(person.getReferenceNumber());
@@ -42,7 +57,11 @@ public class PersonInsertionManager {
             personRepository.save(person);
         }
     }
-
+    /**
+     * Insert country
+     * for each country, test if there is already the same integrated
+     * @param place
+     */
     private void insertCountry(Place place) {
         if(place != null && place.getCountry() != null){
             Country country = countryRepository.findByNameCountry(place.getCountry().getNameCountry());
@@ -53,7 +72,11 @@ public class PersonInsertionManager {
             }
         }
     }
-
+    /**
+     * Insert place
+     * for each place, test if there is already the same integrated
+     * @param person
+     */
     private void insertPlace(Person person) {
         if(person.getPlace() != null){
             Place place = placeRepository.findByNamePlace(person.getPlace().getNamePlace());

@@ -8,7 +8,8 @@ import fr.diginamic.utils.ConstantUtils;
 import org.springframework.stereotype.Component;
 
 /**
- *
+ * @author MENTSEUR Fares
+ * format a line from film_realisateur.csv to a realisation object (person imdb, person imdb)
  */
 @Component
 public class RealisationMapper {

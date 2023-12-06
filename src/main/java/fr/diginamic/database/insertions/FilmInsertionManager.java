@@ -9,6 +9,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Insert films into database
+ * @author MENTSEUR Fares
+ */
 @Service
 public class FilmInsertionManager {
 
@@ -23,6 +27,11 @@ public class FilmInsertionManager {
     @Autowired
     private GenreRepository genreRepository;
 
+    /**
+     * Use a loop to insert films
+     * for each film, insert different children and finally insert film
+     * @param films
+     */
     public void insertFilmIndDataBase(List<Film> films) {
         System.out.println("---------------------------------------");
         System.out.println(films.size() + "  films to insert");
@@ -38,6 +47,11 @@ public class FilmInsertionManager {
 
     }
 
+    /**
+     * Insert different genre
+     * for each genre, test if there is already the same integrated
+     * @param film
+     */
     private void insertGenres(Film film) {
         Set<Genre> genres = film.getGenreSet();
         Set<Genre> newGenres = new HashSet<>();
@@ -55,6 +69,11 @@ public class FilmInsertionManager {
 
     }
 
+    /**
+     * Insert place
+     * for each place, test if there is already the same integrated
+     * @param film
+     */
     private void insertPlace(Film film) {
         if (film.getPlace() != null) {
             Place place = placeRepository.findByNamePlace(film.getPlace().getNamePlace());
@@ -66,6 +85,11 @@ public class FilmInsertionManager {
         }
     }
 
+    /**
+     * Insert country
+     * for each country, test if there is already the same integrated
+     * @param place
+     */
     private void insertCountryPlace(Place place) {
         if (place != null && place.getCountry() != null) {
             Country country = countryRepository.findByNameCountry(place.getCountry().getNameCountry());
@@ -77,6 +101,11 @@ public class FilmInsertionManager {
         }
     }
 
+    /**
+     * Insert language
+     * for each language, test if there is already the same integrated
+     * @param film
+     */
     private void insertLanguage(Film film) {
         if (film.getLanguage() != null) {
             Language language = languageRepository.findByNameLanguage(film.getLanguage().getNameLanguage());
@@ -87,7 +116,11 @@ public class FilmInsertionManager {
             }
         }
     }
-
+    /**
+     * Insert country
+     * for each country, test if there is already the same integrated
+     * @param film
+     */
     private void insertCountry(Film film) {
         if (film.getCountry() != null) {
             Country country = countryRepository.findByNameCountry(film.getCountry().getNameCountry());
@@ -99,6 +132,11 @@ public class FilmInsertionManager {
         }
     }
 
+    /**
+     * Insert film
+     * Test if there is already the same integrated
+     * @param film
+     */
     private void insertFilm(Film film) {
         Film filmDataBase = filmRepository.findByReferenceNumber(film.getReferenceNumber());
         if (filmDataBase == null) {
