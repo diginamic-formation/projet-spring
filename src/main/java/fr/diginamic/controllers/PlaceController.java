@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/language")
+@RequestMapping("/places")
 public class PlaceController {
 
     @Autowired
@@ -39,7 +39,8 @@ public class PlaceController {
     }
     @PostMapping("/update/{id}")
     public String updatePlace(@PathVariable int id, @RequestBody Place updatedPlace){
-        return placeService.updatePlace(id, updatedPlace);
+        placeService.updatePlace(id, updatedPlace);
+        return "The update has been successful";
     }
     
     @DeleteMapping("/delete/{id}")

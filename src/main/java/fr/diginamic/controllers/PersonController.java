@@ -1,6 +1,9 @@
 package fr.diginamic.controllers;
 
+import fr.diginamic.dto.FilmDto;
 import fr.diginamic.dto.PersonDto;
+import fr.diginamic.dto.SimpleFilmDto;
+import fr.diginamic.entities.Film;
 import fr.diginamic.entities.Person;
 import fr.diginamic.services.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +25,7 @@ public class PersonController {
     }
 
     @GetMapping("/{id}")
-    public PersonDto getPerson(@PathVariable int id){
+    public PersonDto getPerson(@PathVariable int id) {
 
         return personService.getPersonById(id);
     }
@@ -47,5 +50,19 @@ public class PersonController {
         return personService.deletePerson(id);
 
     }
+
+
+    @GetMapping("/{id}/filmography")
+    public List<String> getFilmByActor(@PathVariable int id) {
+        return personService.getFilmByActor(id);
+    }
+
+//  renvoi une liste objet de films vs liste de string de titres de films (en haut "filmography")
+//    @GetMapping("/{id}/films")
+//    public List<SimpleFilmDto> getFilmByActor(@PathVariable int id) {
+//        return personService.getSimpleFilmByActor(id);
+//    }
+
+
 
 }

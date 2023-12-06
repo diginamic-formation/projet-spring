@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import fr.diginamic.dto.SimpleFilmDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -80,4 +81,10 @@ public class FilmService {
 		}
 		return "Le film n'existe pas dans la DB";
 	}
+
+	public List<SimpleFilmDto> getSimpleFilmsDtoByPeriod(int startYear, int endYear) {
+		return filmRepository.getSimpleFilmsDtoByPeriod(startYear, endYear);
+	}
+
+
 }
