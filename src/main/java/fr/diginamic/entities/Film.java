@@ -1,234 +1,253 @@
 package fr.diginamic.entities;
 
-import jakarta.persistence.*;
-
 import java.util.Objects;
 import java.util.Set;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+
+/**
+ * Film class is a bean entity
+ */
 @Entity
 @Table(name = "FILM")
 public class Film {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
 
-    private String title;
+	/**
+	 * attributes
+	 */
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
 
-    private Float rating;
+	private String title;
 
-    private String url;
+	private Float rating;
 
-    @Column(columnDefinition="TEXT")
-    private String summary;
-    @Column(name = "year_start")
-    private Integer yearStart;
-    @Column(name = "year_end")
-    private Integer yearEnd;
-    @Column(name = "reference_number")
-    private String referenceNumber;
+	private String url;
 
-    @ManyToOne
-    @JoinColumn(name = "language_id")
-    private Language language;
+	@Column(columnDefinition = "TEXT")
+	private String summary;
+	@Column(name = "year_start")
+	private Integer yearStart;
+	@Column(name = "year_end")
+	private Integer yearEnd;
+	@Column(name = "reference_number")
+	private String referenceNumber;
 
-    @OneToMany(mappedBy = "film")
-    private Set<Role> roleSet;
+	@ManyToOne
+	@JoinColumn(name = "language_id")
+	private Language language;
 
-    @ManyToOne
-    @JoinColumn(name = "country_id")
-    private Country country;
+	@OneToMany(mappedBy = "film")
+	private Set<Role> roleSet;
 
-    @ManyToOne
-    @JoinColumn(name = "place_id")
-    private Place place;
+	@ManyToOne
+	@JoinColumn(name = "country_id")
+	private Country country;
 
+	@ManyToOne
+	@JoinColumn(name = "place_id")
+	private Place place;
 
-    //@JsonIgnore
-    @ManyToMany
-    @JoinTable(name = "FILM_GENRE",
-            joinColumns = @JoinColumn(name = "film_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "genre_id", referencedColumnName = "id"))
-    private Set<Genre> genreSet;
+	// @JsonIgnore
+	@ManyToMany
+	@JoinTable(name = "FILM_GENRE", joinColumns = @JoinColumn(name = "film_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "genre_id", referencedColumnName = "id"))
+	private Set<Genre> genreSet;
 
+	@ManyToMany
+	@JoinTable(name = "REALISATORS_FILMS", joinColumns = @JoinColumn(name = "film_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "person_id", referencedColumnName = "id"))
+	private Set<Person> personSet;
 
-    @ManyToMany
-    @JoinTable(name = "REALISATORS_FILMS",
-            joinColumns = @JoinColumn(name = "film_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "person_id", referencedColumnName = "id"))
-    private Set<Person> personSet;
+	/**
+	 * constructor without parameters
+	 */
+	public Film() {
+	}
 
-    public Film() {
-    }
+	/*
+	 * constructors with parameters
+	 */
+	public Film(int id) {
+		this.id = id;
+	}
 
-    public Film(int id) {
-        this.id = id;
-    }
+	public Film(String title, Float rating, String url, String summary, Integer yearStart, Integer yearEnd,
+			String referenceNumber, Language language, Set<Role> roleSet, Country country, Place place,
+			Set<Genre> genreSet, Set<Person> personSet) {
+		this.title = title;
+		this.rating = rating;
+		this.url = url;
+		this.summary = summary;
+		this.yearStart = yearStart;
+		this.yearEnd = yearEnd;
+		this.referenceNumber = referenceNumber;
+		this.language = language;
+		this.roleSet = roleSet;
+		this.country = country;
+		this.place = place;
+		this.genreSet = genreSet;
+		this.personSet = personSet;
+	}
 
-    public Film(String title, Float rating, String url, String summary, Integer yearStart, Integer yearEnd, String referenceNumber, Language language, Set<Role> roleSet, Country country, Place place, Set<Genre> genreSet, Set<Person> personSet) {
-        this.title = title;
-        this.rating = rating;
-        this.url = url;
-        this.summary = summary;
-        this.yearStart = yearStart;
-        this.yearEnd = yearEnd;
-        this.referenceNumber = referenceNumber;
-        this.language = language;
-        this.roleSet = roleSet;
-        this.country = country;
-        this.place = place;
-        this.genreSet = genreSet;
-        this.personSet = personSet;
-    }
+	public Film(String title, Float rating, String url, String summary, Integer yearStart, Integer yearEnd,
+			String referenceNumber) {
+		this.title = title;
+		this.rating = rating;
+		this.url = url;
+		this.summary = summary;
+		this.yearStart = yearStart;
+		this.yearEnd = yearEnd;
+		this.referenceNumber = referenceNumber;
+	}
 
-    public Film(String title, Float rating, String url, String summary, Integer yearStart, Integer yearEnd, String referenceNumber) {
-        this.title = title;
-        this.rating = rating;
-        this.url = url;
-        this.summary = summary;
-        this.yearStart = yearStart;
-        this.yearEnd = yearEnd;
-        this.referenceNumber = referenceNumber;
-    }
+	/**
+	 * getters and setters
+	 * 
+	 * @return
+	 */
+	public int getId() {
+		return id;
+	}
 
-    public int getId() {
-        return id;
-    }
+	public void setId(int id) {
+		this.id = id;
+	}
 
-    public void setId(int id) {
-        this.id = id;
-    }
+	public String getTitle() {
+		return title;
+	}
 
-    public String getTitle() {
-        return title;
-    }
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+	public Float getRating() {
+		return rating;
+	}
 
-    public Float getRating() {
-        return rating;
-    }
+	public void setRating(Float rating) {
+		this.rating = rating;
+	}
 
-    public void setRating(Float rating) {
-        this.rating = rating;
-    }
+	public String getUrl() {
+		return url;
+	}
 
-    public String getUrl() {
-        return url;
-    }
+	public void setUrl(String url) {
+		this.url = url;
+	}
 
-    public void setUrl(String url) {
-        this.url = url;
-    }
+	public String getSummary() {
+		return summary;
+	}
 
-    public String getSummary() {
-        return summary;
-    }
+	public void setSummary(String summary) {
+		this.summary = summary;
+	}
 
-    public void setSummary(String summary) {
-        this.summary = summary;
-    }
+	public Integer getYearStart() {
+		return yearStart;
+	}
 
-    public Integer getYearStart() {
-        return yearStart;
-    }
+	public void setYearStart(Integer yearStart) {
+		this.yearStart = yearStart;
+	}
 
-    public void setYearStart(Integer yearStart) {
-        this.yearStart = yearStart;
-    }
+	public Integer getYearEnd() {
+		return yearEnd;
+	}
 
-    public Integer getYearEnd() {
-        return yearEnd;
-    }
+	public void setYearEnd(Integer yearEnd) {
+		this.yearEnd = yearEnd;
+	}
 
-    public void setYearEnd(Integer yearEnd) {
-        this.yearEnd = yearEnd;
-    }
+	public String getReferenceNumber() {
+		return referenceNumber;
+	}
 
-    public String getReferenceNumber() {
-        return referenceNumber;
-    }
+	public void setReferenceNumber(String referenceNumber) {
+		this.referenceNumber = referenceNumber;
+	}
 
-    public void setReferenceNumber(String referenceNumber) {
-        this.referenceNumber = referenceNumber;
-    }
+	public Language getLanguage() {
+		return language;
+	}
 
-    public Language getLanguage() {
-        return language;
-    }
+	public void setLanguage(Language language) {
+		this.language = language;
+	}
 
-    public void setLanguage(Language language) {
-        this.language = language;
-    }
+	public Set<Role> getRoleSet() {
+		return roleSet;
+	}
 
-    public Set<Role> getRoleSet() {
-        return roleSet;
-    }
+	public void setRoleSet(Set<Role> roleSet) {
+		this.roleSet = roleSet;
+	}
 
-    public void setRoleSet(Set<Role> roleSet) {
-        this.roleSet = roleSet;
-    }
+	public Country getCountry() {
+		return country;
+	}
 
-    public Country getCountry() {
-        return country;
-    }
+	public void setCountry(Country country) {
+		this.country = country;
+	}
 
-    public void setCountry(Country country) {
-        this.country = country;
-    }
+	public Place getPlace() {
+		return place;
+	}
 
-    public Place getPlace() {
-        return place;
-    }
+	public void setPlace(Place place) {
+		this.place = place;
+	}
 
-    public void setPlace(Place place) {
-        this.place = place;
-    }
+	public Set<Genre> getGenreSet() {
+		return genreSet;
+	}
 
-    public Set<Genre> getGenreSet() {
-        return genreSet;
-    }
+	public void setGenreSet(Set<Genre> genreSet) {
+		this.genreSet = genreSet;
+	}
 
-    public void setGenreSet(Set<Genre> genreSet) {
-        this.genreSet = genreSet;
-    }
+	public Set<Person> getPersonSet() {
+		return personSet;
+	}
 
-    public Set<Person> getPersonSet() {
-        return personSet;
-    }
+	public void setPersonSet(Set<Person> personSet) {
+		this.personSet = personSet;
+	}
 
-    public void setPersonSet(Set<Person> personSet) {
-        this.personSet = personSet;
-    }
+	@Override
+	public String toString() {
+		return "Film{" + "id=" + id + ", title='" + title + '\'' + ", rating=" + rating + ", url='" + url + '\''
+				+ ", summary='" + summary + '\'' + ", yearStart=" + yearStart + ", yearEnd=" + yearEnd
+				+ ", referenceNumber='" + referenceNumber + '\'' + ", language=" + language + ", country=" + country
+				+ ", place=" + place + '}';
+	}
 
-    @Override
-    public String toString() {
-        return "Film{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", rating=" + rating +
-                ", url='" + url + '\'' +
-                ", summary='" + summary + '\'' +
-                ", yearStart=" + yearStart +
-                ", yearEnd=" + yearEnd +
-                ", referenceNumber='" + referenceNumber + '\'' +
-                ", language=" + language +
-                ", country=" + country +
-                ", place=" + place +
-                '}';
-    }
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+		Film film = (Film) o;
+		return yearStart == film.yearStart && yearEnd == film.yearEnd && Objects.equals(title, film.title)
+				&& Objects.equals(referenceNumber, film.referenceNumber) && Objects.equals(country, film.country);
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Film film = (Film) o;
-        return yearStart == film.yearStart && yearEnd == film.yearEnd && Objects.equals(title, film.title) && Objects.equals(referenceNumber, film.referenceNumber) && Objects.equals(country, film.country);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(title, yearStart, yearEnd, referenceNumber, country);
-    }
+	@Override
+	public int hashCode() {
+		return Objects.hash(title, yearStart, yearEnd, referenceNumber, country);
+	}
 }
