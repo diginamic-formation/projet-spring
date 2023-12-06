@@ -1,14 +1,12 @@
 package fr.diginamic;
 
-import fr.diginamic.database.DataBaseInsertion;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
+import fr.diginamic.database.DataBaseInsertion;
 
 @SpringBootApplication
 public class DataBaseFillingApplication {
@@ -28,4 +26,5 @@ public class DataBaseFillingApplication {
     private void startImport() {
         dataBaseInsertion.insertFromFile();
     }
+
 }

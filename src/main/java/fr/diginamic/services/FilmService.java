@@ -13,8 +13,11 @@ import fr.diginamic.dto.SimpleFilmDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import fr.diginamic.dto.FilmActorDto;
 import fr.diginamic.dto.FilmDto;
+import fr.diginamic.dto.FilmRoleDto;
 import fr.diginamic.entities.Film;
+import fr.diginamic.entities.Role;
 import fr.diginamic.repositories.FilmRepository;
 
 @Service
@@ -23,6 +26,7 @@ public class FilmService {
 	@Autowired
 	private FilmRepository filmRepository;
 
+	// Tous les films
 	public List<FilmDto> getAll() {
 		Iterable<Film> films = filmRepository.findAll();
 		List<FilmDto> filmsDto = new ArrayList<>();
@@ -33,6 +37,7 @@ public class FilmService {
 		return filmsDto;
 	}
 
+	// Un film par son id
 	public FilmDto getFilmById(int id) {
 		Optional<Film> film = filmRepository.findById(id);
 		if (film.isPresent()) {
@@ -42,6 +47,7 @@ public class FilmService {
 		return null;
 	}
 
+	// Un film par son titre
 	public List<SimplePersonDto> getActorsFilmById(int id1, int id2) {
 
 		List<Person> persons = filmRepository.findCommonPersonInFilms(id1,id2);
@@ -61,6 +67,7 @@ public class FilmService {
 		return null;
 	}
 
+	// Un titre par son numéro de référence
 	public FilmDto getFindByReferenceNumber(String referenceNumber) {
 		Film film = filmRepository.findByReferenceNumber(referenceNumber);
 		if (film != null) {
@@ -70,11 +77,12 @@ public class FilmService {
 		return null;
 	}
 
+	// Insérer un film
 	public void insertFilm(Film nwFilm) {
 		filmRepository.save(nwFilm);
-
 	}
 
+	// Modifier un film
 	public String updateFilm(int id, Film filmUpdate) {
 		Optional<Film> film = filmRepository.findById(id);
 		if (film.isPresent()) {
@@ -88,6 +96,7 @@ public class FilmService {
 		return "Le film n'existe pas dans la DB";
 	}
 
+	// Supprimer un film
 	public String deleteFilm(int id) {
 		Optional<Film> film = filmRepository.findById(id);
 		if (film.isPresent()) {
@@ -97,9 +106,28 @@ public class FilmService {
 		return "Le film n'existe pas dans la DB";
 	}
 
+	public List<FilmRoleDto> getfindAllRoleByFilm(Integer id) {
+		List<Role> roles = filmRepository.findAllRoleByFilm(id);
+		List<FilmRoleDto> filmsRoleDto = new ArrayList();
+		for (Role role : roles) {
+			FilmRoleDto filmRoleDto = new FilmRoleDto(role);
+			filmsRoleDto.add(filmRoleDto);
+		}
+		return filmsRoleDto;
+	}
+
+	public List<FilmActorDto> getFindAllFilmCommunTwoActors(Integer person1Id, Integer person2Id) {
+		List<Film> films = filmRepository.findAllFilmCommunTwoActors(person1Id, person2Id);
+		List<FilmActorDto> filmsActorDto = new ArrayList<>();
+		for (Film film : films) {
+			FilmActorDto filmActorDto = new FilmActorDto(film);
+			filmsActorDto.add(filmActorDto);
+		}
+		return filmsActorDto;
+	}
 
 	public List<SimpleFilmDto> getSimpleFilmsDtoByPeriod(int startYear, int endYear) {
 		return filmRepository.getSimpleFilmsDtoByPeriod(startYear, endYear);
 	}
-
+  
 }
