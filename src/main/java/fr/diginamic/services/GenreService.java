@@ -80,5 +80,13 @@ public class GenreService {
     }
 
 
+    public GenreDto getGenreById(int id) {
+        Optional<Genre> optionalGenre = genreRepository.findById(id);
+        if(optionalGenre.isPresent()){
+            Genre genre = optionalGenre.get();
+            return new GenreDto(genre);
+        }
+        return null;
+    }
 }
 

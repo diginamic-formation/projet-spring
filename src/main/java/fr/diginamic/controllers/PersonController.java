@@ -46,6 +46,38 @@ public class PersonController {
         return personService.getPersonByImdb(imdb);
     }
 
+    @GetMapping("/{id}/filmography")
+    public List<String> getListFilmByActor(@PathVariable int id) {
+        return personService.getFilmByActor(id);
+    }
+
+    //  renvoi une liste objet de films vs liste de string de titres de films (en haut "filmography")
+    @GetMapping("/{id}/films")
+    public List<SimpleFilmDto> getFilmByActor(@PathVariable int id) {
+        return personService.getSimpleFilmByActor(id);
+    }
+
+    @GetMapping("/{id}/films/year{min}{max}")
+    public List<SimpleFilmDto> getFilmsInYearsIntervalByActorId(@PathVariable int id, @RequestParam int min, @RequestParam int max) {
+        return personService.findFilmsActorIdAndYearInterval(id, min, max);
+    }
+
+    @GetMapping("/{id}/films/speciality")
+    public GenreDto getGenreSpecialityByActorId(@PathVariable int id) {
+        return personService.getGenreSpecialityByActorId(id);
+    }
+
+    @GetMapping("/realisator/{id}/films")
+    public PersonFilmDto getfilmRealisatorById(@PathVariable int id) {
+        return personService.getfilmRealisatorById(id);
+    }
+
+
+    @GetMapping("/test")
+    public void getActorsByGenre() {
+        personService.getActorsByGenre();
+    }
+
     @PutMapping
     public PersonDto insertPerson(@RequestBody Person newPerson) {
         return personService.savePerson(newPerson);
@@ -61,38 +93,5 @@ public class PersonController {
         return personService.deletePerson(id);
 
     }
-
-
-    @GetMapping("/{id}/films/year{min}{max}")
-    public List<SimpleFilmDto> getFilmsInYearsIntervalByActorId(@PathVariable int id,@RequestParam int min,@RequestParam int max ){
-        return personService.findFilmsActorIdAndYearInterval(id,min,max);
-    }
-
-    @GetMapping("/{id}/films/speciality")
-    public GenreDto getGenreSpecialityByActorId(@PathVariable int id){
-        return personService.getGenreSpecialityByActorId(id);
-    }
-
-    @GetMapping("/test")
-    public void getActorsByGenre(){
-        personService.getActorsByGenre();
-    }
-
-    @GetMapping("/realisator/{id}/films")
-    public PersonFilmDto getfilmRealisatorById(@PathVariable int id){
-        return personService.getfilmRealisatorById(id);
-    }
-
-    @GetMapping("/{id}/filmography")
-    public List<String> getFilmByActor(@PathVariable int id) {
-        return personService.getFilmByActor(id);
-    }
-
-//  renvoi une liste objet de films vs liste de string de titres de films (en haut "filmography")
-//    @GetMapping("/{id}/films")
-//    public List<SimpleFilmDto> getFilmByActor(@PathVariable int id) {
-//        return personService.getSimpleFilmByActor(id);
-//    }
-
 
 }

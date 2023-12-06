@@ -1,9 +1,6 @@
 package fr.diginamic.services;
 
-import fr.diginamic.dto.CountryDto;
 import fr.diginamic.dto.PlaceDto;
-import fr.diginamic.entities.Country;
-import fr.diginamic.entities.Genre;
 import fr.diginamic.entities.Place;
 import fr.diginamic.repositories.PlaceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +28,7 @@ public class PlaceService {
         return placesDto;
     }
 
-    public PlaceDto getNamePlace(String name) {
+    public PlaceDto getPlaceByName(String name) {
         Place place = placeRepository.findByNamePlace(name);
         PlaceDto placeDto = new PlaceDto(place);
         return placeDto;
@@ -67,4 +64,12 @@ public class PlaceService {
         return "not found";
     }
 
+    public PlaceDto getPlaceById(int id) {
+        Optional<Place> optionalPlace = placeRepository.findById(id);
+        if(optionalPlace.isPresent()){
+            Place place = optionalPlace.get();
+            return new PlaceDto(place);
+        }
+        return null;
+    }
 }

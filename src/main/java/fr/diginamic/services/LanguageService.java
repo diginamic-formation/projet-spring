@@ -64,5 +64,14 @@ public class LanguageService {
             }
             return "not found";
         }
+
+    public LanguageDto getLanguageById(int id) {
+        Optional<Language> optionalLanguage = languageRepository.findById(id);
+        if(optionalLanguage.isPresent()){
+            Language language = optionalLanguage.get();
+            return new LanguageDto(language);
+        }
+        return null;
     }
+}
 

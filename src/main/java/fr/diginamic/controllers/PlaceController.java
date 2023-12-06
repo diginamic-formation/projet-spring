@@ -30,7 +30,12 @@ public class PlaceController {
 
 	@GetMapping("place/{namePlace}")
 	public PlaceDto getPlaceByName(@PathVariable String namePlace) {
-		return placeService.getNamePlace(namePlace);
+		return placeService.getPlaceByName(namePlace);
+	}
+
+	@GetMapping("/{id}")
+	public PlaceDto getPlaceByID(@PathVariable int id){
+		return placeService.getPlaceById(id);
 	}
 
 	@PutMapping
