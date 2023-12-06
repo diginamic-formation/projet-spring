@@ -31,6 +31,7 @@ public class PersonController {
 
     @GetMapping("imdb/{imdb}")
     public PersonDto getPersonByImdb(@PathVariable String imdb) {
+
         return personService.getPersonByImdb(imdb);
     }
 
@@ -49,8 +50,8 @@ public class PersonController {
         return personService.deletePerson(id);
 
     }
-    @GetMapping("/filmRealisator/{namePerson}")
-    public PersonFilmDto getfilmRealisatorByName(@PathVariable String namePerson){
-        return personService.getfilmRealisatorByName(namePerson);
+    @GetMapping("/realisator/{id}/films")
+    public PersonFilmDto getfilmRealisatorById(@PathVariable int id){
+        return personService.getfilmRealisatorById(id);
     }
 }

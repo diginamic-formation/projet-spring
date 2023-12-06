@@ -87,9 +87,11 @@ public class PersonService {
         return "This Person does not exists in the database";
     }
 
-    public PersonFilmDto getfilmRealisatorByName(String namePerson) {
-        Person person = personRepository.findByFullName(namePerson);
-        if(person !=null){
+    public PersonFilmDto getfilmRealisatorById(int id) {
+        Optional<Person> optionalPerson = personRepository.findById(id);
+
+        if(optionalPerson.isPresent()){
+            Person person = optionalPerson.get();
             PersonFilmDto personFilmDto = new PersonFilmDto(person);
             return personFilmDto;
         }

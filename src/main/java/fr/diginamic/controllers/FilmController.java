@@ -1,5 +1,6 @@
 package fr.diginamic.controllers;
 
+import fr.diginamic.dto.SimplePersonDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,11 +15,14 @@ import fr.diginamic.dto.FilmDto;
 import fr.diginamic.entities.Film;
 import fr.diginamic.services.FilmService;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/films")
 public class FilmController {
 	@Autowired
 	private FilmService filmService;
+
 
 	@GetMapping
 	public Iterable<FilmDto> getFilms() {
@@ -28,6 +32,7 @@ public class FilmController {
 
 	@GetMapping("/{id}")
 	public FilmDto getFilm(@PathVariable int id) {
+
 		return filmService.getFilmById(id);
 	}
 
@@ -41,6 +46,14 @@ public class FilmController {
 	public FilmDto getFilmByReferenceNumber(String referenceNumber) {
 		return filmService.getFindByReferenceNumber(referenceNumber);
 	}
+
+	@GetMapping("/{id1}/{id2}/actors")
+	public List<SimplePersonDto> getActorsByFilmId(@PathVariable int id1, @PathVariable int id2){
+
+		return filmService.getActorsFilmById(id1,id2);
+
+	}
+
 
 	@PutMapping
 	public String saveFilm(@RequestBody Film nvFilm) {
@@ -60,4 +73,5 @@ public class FilmController {
 		filmService.deleteFilm(id);
 		return "Film supprimé";
 	}
+
 }

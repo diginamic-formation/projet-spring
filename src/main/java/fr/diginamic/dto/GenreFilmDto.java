@@ -12,10 +12,12 @@ public class GenreFilmDto {
     private List<String> films = new ArrayList<>();
 
     public String getNameGenre() {
+
         return nameGenre;
     }
 
     public void setNameGenre(String nameGenre) {
+
         this.nameGenre = nameGenre;
     }
 
@@ -40,3 +42,4 @@ public class GenreFilmDto {
     }
 
 }
+

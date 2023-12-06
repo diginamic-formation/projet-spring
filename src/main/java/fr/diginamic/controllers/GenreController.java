@@ -26,15 +26,15 @@ public class GenreController {
 
     }
 
-    @GetMapping("/genre/{nameGenre}")
-    public GenreDto getGenreByName(@PathVariable String nameGenre){
+    @GetMapping("/films/{nameGenre}")
+    public GenreFilmDto getGenreByName(@PathVariable String nameGenre){
 
         return genreService.getGenreByName(nameGenre);
     }
-    @GetMapping("/filmGenre/{nameGenre}")
-    public GenreFilmDto getfilmGenreByName(@PathVariable String nameGenre){
+    @GetMapping("/{id}/films")
+    public GenreFilmDto getfilmGenreById(@PathVariable int id){
 
-        return genreService.getfilmGenreByNameGenre(nameGenre);
+        return genreService.getfilmGenreById(id);
     }
 
 

@@ -31,14 +31,18 @@ public class GenreService {
         return  genresDto;
     }
 
-    public GenreDto getGenreByName(String name) {
-       Genre genre = genreRepository.findByNameGenre(name);
-       GenreDto genreDto = new GenreDto(genre);
-       return genreDto;
-    }
-    public GenreFilmDto getfilmGenreByNameGenre(String name) {
+    public GenreFilmDto getGenreByName(String name) {
         Genre genre = genreRepository.findByNameGenre(name);
-       if(genre !=null){
+        if(genre !=null) {
+            GenreFilmDto genreFilmDto = new GenreFilmDto(genre);
+            return genreFilmDto;
+        }
+        return null;
+    }
+    public GenreFilmDto getfilmGenreById(int id) {
+        Optional<Genre> optionalGenre = genreRepository.findById(id);
+       if(optionalGenre.isPresent()){
+           Genre genre = optionalGenre.get();
            GenreFilmDto genreFilmDto = new GenreFilmDto(genre);
            return genreFilmDto;
        }
