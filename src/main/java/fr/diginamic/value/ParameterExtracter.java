@@ -4,6 +4,11 @@ package fr.diginamic.value;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+/**
+ * @author MENTSEUR Fares
+ * used to not put file-names and paths in the program
+ * Read all the paths from Application.properties
+ */
 @Component
 public class ParameterExtracter {
 
