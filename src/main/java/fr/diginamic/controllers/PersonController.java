@@ -28,6 +28,7 @@ public class PersonController {
     @Autowired
     private PersonService personService;
 
+
     @GetMapping
     public List<PersonDto> getPersons() {
         return personService.getALL();
