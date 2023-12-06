@@ -1,18 +1,14 @@
 package fr.diginamic.controllers;
 
+import fr.diginamic.dto.SimpleFilmDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import fr.diginamic.dto.FilmDto;
 import fr.diginamic.entities.Film;
 import fr.diginamic.services.FilmService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/films")
@@ -60,4 +56,11 @@ public class FilmController {
 		filmService.deleteFilm(id);
 		return "Film supprimé";
 	}
+
+	@GetMapping("/period/year{startYear}{endYear}")
+	public List<SimpleFilmDto> getSimpleFilmsDtoByPeriod(@RequestParam int startYear, @RequestParam int endYear){
+		return filmService.getSimpleFilmsDtoByPeriod(startYear,endYear);
+	}
+
+
 }
