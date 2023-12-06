@@ -33,7 +33,7 @@ public class PlaceController {
         return placeService.getNamePlace(namePlace);
     }
     @PutMapping
-    public PlaceDto insertCountry(@RequestBody Place newPlace){
+    public PlaceDto insertPlace(@RequestBody Place newPlace){
 
         return placeService.save(newPlace);
     }
@@ -41,8 +41,9 @@ public class PlaceController {
     public String updatePlace(@PathVariable int id, @RequestBody Place updatedPlace){
         placeService.updatePlace(id, updatedPlace);
         return "The update has been successful";
+
     }
-    
+
     @DeleteMapping("/delete/{id}")
     public String deletePlaceById(@PathVariable int id){
 

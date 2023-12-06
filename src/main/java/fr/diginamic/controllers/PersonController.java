@@ -1,9 +1,15 @@
 package fr.diginamic.controllers;
 
+
+import fr.diginamic.dto.GenreFilmDto;
+import fr.diginamic.dto.PersonDto;
+import fr.diginamic.dto.PersonFilmDto;
+
 import fr.diginamic.dto.FilmDto;
 import fr.diginamic.dto.PersonDto;
 import fr.diginamic.dto.SimpleFilmDto;
 import fr.diginamic.entities.Film;
+
 import fr.diginamic.entities.Person;
 import fr.diginamic.services.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +38,7 @@ public class PersonController {
 
     @GetMapping("imdb/{imdb}")
     public PersonDto getPersonByImdb(@PathVariable String imdb) {
+
         return personService.getPersonByImdb(imdb);
     }
 
@@ -51,6 +58,10 @@ public class PersonController {
 
     }
 
+    @GetMapping("/realisator/{id}/films")
+    public PersonFilmDto getfilmRealisatorById(@PathVariable int id){
+        return personService.getfilmRealisatorById(id);
+    }
 
     @GetMapping("/{id}/filmography")
     public List<String> getFilmByActor(@PathVariable int id) {
@@ -62,7 +73,5 @@ public class PersonController {
 //    public List<SimpleFilmDto> getFilmByActor(@PathVariable int id) {
 //        return personService.getSimpleFilmByActor(id);
 //    }
-
-
 
 }

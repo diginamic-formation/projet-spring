@@ -19,9 +19,12 @@ public interface PersonRepository extends CrudRepository<Person, Integer> {
 
     Person getByReferenceNumber(String referenceNumber);
 
+    Person findByFullName(String namePerson);
+
     //List<Person> findByName(String name);
     @Query("SELECT new fr.diginamic.dto.FilmDto(f) FROM Film f JOIN f.roleSet r JOIN r.person p WHERE p.id = :actorId")
     List<FilmDto> getAllFilmsByActorId(int actorId);
+
 
     List<Person> findByFullName(String name);
 

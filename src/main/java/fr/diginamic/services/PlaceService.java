@@ -22,12 +22,13 @@ public class PlaceService {
 
     public List<PlaceDto> getAll() {
         Iterable<Place> places = placeRepository.findAll();
-        List<PlaceDto> placeDto = new ArrayList<>();
+        List<PlaceDto> placesDto = new ArrayList<>();
         for(Place place : places){
-            placeDto = (List<PlaceDto>) new PlaceDto(place);
+            PlaceDto placeDto = new PlaceDto(place);
+            placesDto.add(placeDto);
 
         }
-        return placeDto;
+        return placesDto;
     }
 
     public PlaceDto getNamePlace(String name) {

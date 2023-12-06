@@ -20,15 +20,16 @@ public class CountryService {
 
     public List<CountryDto> getAll() {
        Iterable<Country> countries = countryRepository.findAll();
-       List<CountryDto> countryDto = new ArrayList<>();
+       List<CountryDto> countriesDto = new ArrayList<>();
        for (Country country : countries){
-           countryDto = (List<CountryDto>) new CountryDto((country));
-           countryDto.add((CountryDto) countryDto);
+           CountryDto countryDto =  new CountryDto(country);
+           countriesDto.add( countryDto);
        }
-       return countryDto;
+       return countriesDto;
     }
 
-    public CountryDto getCountryByName(String nameCountry) {
+    public CountryDto getCountryByNameCountry(String nameCountry) {
+
         Country country =countryRepository.findByNameCountry(nameCountry);
         CountryDto countryDto = new CountryDto(country);
         return countryDto;

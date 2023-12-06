@@ -1,9 +1,16 @@
 package fr.diginamic.services;
 
+
+import fr.diginamic.dto.GenreFilmDto;
+import fr.diginamic.dto.PersonDto;
+import fr.diginamic.dto.PersonFilmDto;
+import fr.diginamic.entities.Genre;
+
 import fr.diginamic.dto.FilmDto;
 import fr.diginamic.dto.PersonDto;
 import fr.diginamic.dto.SimpleFilmDto;
 import fr.diginamic.entities.Film;
+
 import fr.diginamic.entities.Person;
 import fr.diginamic.repositories.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,6 +91,17 @@ public class PersonService {
         return "This Person does not exists in the database";
     }
 
+    public PersonFilmDto getfilmRealisatorById(int id) {
+        Optional<Person> optionalPerson = personRepository.findById(id);
+
+        if(optionalPerson.isPresent()){
+            Person person = optionalPerson.get();
+            PersonFilmDto personFilmDto = new PersonFilmDto(person);
+            return personFilmDto;
+        }
+        return null;
+    }
+
     public List<String> getFilmByActor(int id) {
         List<FilmDto> filmDtoList = personRepository.getAllFilmsByActorId(id);
         List<String> titles = filmDtoList.stream().map(film -> film.getYearEnd() + ", " + film.getTitle()).toList();
@@ -94,6 +112,5 @@ public class PersonService {
         return personRepository.getAllSimpleFilmsByActorId(id);
 
     }
-
 
 }

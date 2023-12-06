@@ -35,7 +35,7 @@ public class LanguageController {
 
     @GetMapping("/language/{nameLanguage}")
     public LanguageDto getLanguageByName(@PathVariable String nameLanguage){
-        return languageService.getLanguageByName(nameLanguage);
+        return languageService.getLanguageByNameLanguage(nameLanguage);
     }
     @PutMapping
     public LanguageDto insertLanguage(@RequestBody Language newLanguage){

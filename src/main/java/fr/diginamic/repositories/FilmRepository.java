@@ -1,6 +1,10 @@
 package fr.diginamic.repositories;
 
+
+import fr.diginamic.entities.Person;
+
 import fr.diginamic.dto.SimpleFilmDto;
+
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -15,6 +19,10 @@ public interface FilmRepository extends CrudRepository<Film, Integer> {
 	Film findByReferenceNumber(String referenceNumber);
 
 	Film findByTitle(String title);
+	@Query( "SELECT p from Person p join p.roleSet r join r.film f " +
+			"where f.id =:id1 and p.id in " +
+			"(SELECT p.id from Person p join p.roleSet r join r.film f where f.id =:id2)")
+	List<Person>findCommonPersonInFilms(int id1, int id2);
 
 
 	@Query("Select f FROM Film f WHERE f.yearEnd BETWEEN :startYear AND :endYear")
