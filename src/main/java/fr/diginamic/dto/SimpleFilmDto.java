@@ -38,6 +38,5 @@ public class SimpleFilmDto {
         this.year = year;
     }
 
-
-
 }
+

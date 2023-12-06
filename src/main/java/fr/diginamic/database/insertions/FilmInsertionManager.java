@@ -24,7 +24,8 @@ public class FilmInsertionManager {
     private GenreRepository genreRepository;
 
     public void insertFilmIndDataBase(List<Film> films) {
-        System.out.println(films.size() + "  films à insérer");
+        System.out.println("---------------------------------------");
+        System.out.println(films.size() + "  films to insert");
         for (Film film : films) {
             insertGenres(film);
             insertCountry(film);
@@ -33,6 +34,7 @@ public class FilmInsertionManager {
             insertPlace(film);
             insertFilm(film);
         }
+        System.out.println("Actors Insertion DONE !!!");
 
     }
 

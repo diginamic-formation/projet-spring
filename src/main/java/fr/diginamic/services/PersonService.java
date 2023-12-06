@@ -1,5 +1,10 @@
 package fr.diginamic.services;
 
+import fr.diginamic.dto.GenreDto;
+import fr.diginamic.dto.PersonDto;
+import fr.diginamic.dto.SimpleFilmDto;
+import fr.diginamic.entities.Film;
+import fr.diginamic.entities.Genre;
 
 import fr.diginamic.dto.GenreFilmDto;
 import fr.diginamic.dto.PersonDto;
@@ -44,8 +49,8 @@ public class PersonService {
     }
 
     public PersonDto getPersonByImdb(String imdb) {
-        Person person = personRepository.getByReferenceNumber(imdb);
-        if (person != null) {
+        Person person = personRepository.findByReferenceNumber(imdb);
+        if(person != null){
             PersonDto personDto = new PersonDto(person);
             return personDto;
         }
@@ -89,6 +94,43 @@ public class PersonService {
             return "The Person has benn deleted from the database";
         }
         return "This Person does not exists in the database";
+    }
+
+    public List<SimpleFilmDto> findFilmsActorIdAndYearInterval(int id, int yearMin, int yearMax) {
+        return personRepository.getFilmsByIdActorAndYearInterval(id,yearMin, yearMax);
+    }
+
+    public GenreDto getGenreSpecialityByActorId(int id) {
+        List<Film> films = personRepository.getGenreSpecialityByActorId(id);
+        Genre genre = extractMaxGenre(films);
+        return new GenreDto(genre);
+    }
+
+    public void getActorsByGenre(){
+        List<Object> result = personRepository.getActorsByGenre();
+        for (Object object : result){
+            Object[] columns = (Object[]) object;
+            System.out.println(columns[0] + "   " + columns[1] + "   "+columns[2] +"   " +columns[3]);
+        }
+    }
+
+    private Genre extractMaxGenre(List<Film> films) {
+        Map<Genre, Integer> mapGenreOccurence = new HashMap<>();
+        List<Genre> genres = new ArrayList<>();
+        Genre maxGenre = null;
+        int maxOccurence = 0;
+        films.forEach(film -> genres.addAll(film.getGenreSet()));
+        genres.forEach(genre -> {
+            mapGenreOccurence.merge(genre, 1, Integer::sum);
+        });
+        System.out.println(mapGenreOccurence);
+        for (Genre genre : mapGenreOccurence.keySet()){
+            if(maxOccurence < mapGenreOccurence.get(genre)){
+                maxGenre = genre;
+                maxOccurence = mapGenreOccurence.get(genre);
+            }
+        }
+        return maxGenre;
     }
 
     public PersonFilmDto getfilmRealisatorById(int id) {

@@ -6,6 +6,7 @@ import fr.diginamic.entities.Place;
 import fr.diginamic.repositories.CountryRepository;
 import fr.diginamic.repositories.PersonRepository;
 import fr.diginamic.repositories.PlaceRepository;
+import fr.diginamic.utils.ConstantUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,16 +22,22 @@ public class PersonInsertionManager {
     @Autowired
     private PlaceRepository placeRepository;
 
-    public void insertPersonInDataBase(List<Person> persons) {
+    public void insertPersonInDataBase(List<Person> persons, int type) {
+        String personType = (type == ConstantUtils.ACTOR_PERSON) ? "Actors" : "Realisators";
+        System.out.println("---------------------------------------");
+        System.out.println(personType + " Insertion : "+persons.size() + " to insert");
         for (Person person : persons) {
             insertCountry(person.getPlace());
             insertPlace(person);
             insertPerson(person);
         }
+        System.out.println(personType + " Insertion DONE !!!");
+
     }
 
     private void insertPerson(Person person) {
-        Person personDataBase = personRepository.getByReferenceNumber(person.getReferenceNumber());
+
+        Person personDataBase = personRepository.findByReferenceNumber(person.getReferenceNumber());
         if(personDataBase == null){
             personRepository.save(person);
         }

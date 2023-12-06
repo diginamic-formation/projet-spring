@@ -26,5 +26,4 @@ public class DataBaseFillingApplication {
     private void startImport() {
         dataBaseInsertion.insertFromFile();
     }
-
 }

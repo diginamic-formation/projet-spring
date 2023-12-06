@@ -16,7 +16,8 @@ public class FilmMapper {
         Film film = new Film();
         film.setTitle(columns[ConstantUtils.FILM_TITLE_COLUMN_ORDER]);
         film.setReferenceNumber(columns[ConstantUtils.FILM_IMDB_COLUMN_ORDER]);
-        // ToDO Add YERR_START & YEAR_END
+        film.setYearStart(extractYearStart(columns[ConstantUtils.FILM_YEAR_COLUMN_ORDER]));
+        film.setYearEnd(extractYearEnd(columns[ConstantUtils.FILM_YEAR_COLUMN_ORDER]));
         film.setRating(extractRating(columns[ConstantUtils.FILM_RATING_COLUMN_ORDER]));
         film.setUrl(columns[ConstantUtils.FILM_URL_COLUMN_ORDER]);
         film.setPlace(extractPlace(columns[ConstantUtils.FILM_LOCATION_COLUMN_ORDER]));
@@ -27,11 +28,21 @@ public class FilmMapper {
         return film;
     }
 
+    private Integer extractYearEnd(String yearString) {
+        String[] years = yearString.split(ConstantUtils.FILM_YEAR_SEPARATOR_REGEX);
+        return (years.length > 1) ? Integer.valueOf(years[1].trim()) : Integer.valueOf(years[0].trim());
+    }
+
+    private Integer extractYearStart(String yearString) {
+        String[] years = yearString.split(ConstantUtils.FILM_YEAR_SEPARATOR_REGEX);
+        return Integer.valueOf(years[0].trim());
+    }
+
     private Float extractRating(String ratingString) {
-        if(ratingString ==null ||ratingString.isEmpty()){
+        if (ratingString == null || ratingString.isEmpty()) {
             return null;
         }
-        return Float.parseFloat(ratingString.replace(",",".").trim());
+        return Float.parseFloat(ratingString.replace(",", ".").trim());
     }
 
     private Country extractCountry(String coutnryString) {
@@ -62,11 +73,11 @@ public class FilmMapper {
 
 
     private Place extractPlace(String placeString) {
-        if (placeString == null || placeString.isEmpty()){
+        if (placeString == null || placeString.isEmpty()) {
             return null;
         }
         String[] elements = placeString.split(",");
-        Country country = new Country(elements[0]);
+        Country country = new Country(elements[0].trim());
         Place place = extractAdditionalPlaceInfos(elements);
         place.setCountry(country);
         return place;
