@@ -11,7 +11,5 @@ public interface CountryRepository extends CrudRepository<Country, Integer> {
 
     Country findByNameCountry(String nameCountry);
 
-    //Country getCountryByName(String nameCountry);
-
     Country deleteById(int id);
 }

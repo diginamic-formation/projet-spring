@@ -1,16 +1,20 @@
 package fr.diginamic.services;
 
+
 import fr.diginamic.dto.GenreFilmDto;
 import fr.diginamic.dto.PersonDto;
 import fr.diginamic.dto.PersonFilmDto;
 import fr.diginamic.entities.Genre;
+
+import fr.diginamic.dto.FilmDto;
+import fr.diginamic.dto.PersonDto;
+import fr.diginamic.dto.SimpleFilmDto;
+import fr.diginamic.entities.Film;
+
 import fr.diginamic.entities.Person;
 import fr.diginamic.repositories.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.*;
 
@@ -97,4 +101,16 @@ public class PersonService {
         }
         return null;
     }
+
+    public List<String> getFilmByActor(int id) {
+        List<FilmDto> filmDtoList = personRepository.getAllFilmsByActorId(id);
+        List<String> titles = filmDtoList.stream().map(film -> film.getYearEnd() + ", " + film.getTitle()).toList();
+        return titles;
+    }
+
+    public List<SimpleFilmDto> getSimpleFilmByActor(int id) {
+        return personRepository.getAllSimpleFilmsByActorId(id);
+
+    }
+
 }

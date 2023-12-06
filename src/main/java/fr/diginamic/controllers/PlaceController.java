@@ -39,7 +39,8 @@ public class PlaceController {
     }
     @PostMapping("/update/{id}")
     public String updatePlace(@PathVariable int id, @RequestBody Place updatedPlace){
-         return placeService.updatePlace(id, updatedPlace);
+        placeService.updatePlace(id, updatedPlace);
+        return "The update has been successful";
 
     }
 

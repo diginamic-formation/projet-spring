@@ -29,6 +29,7 @@ public class CountryService {
     }
 
     public CountryDto getCountryByNameCountry(String nameCountry) {
+
         Country country =countryRepository.findByNameCountry(nameCountry);
         CountryDto countryDto = new CountryDto(country);
         return countryDto;
