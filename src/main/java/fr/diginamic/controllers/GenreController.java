@@ -2,6 +2,7 @@ package fr.diginamic.controllers;
 
 
 import fr.diginamic.dto.GenreDto;
+import fr.diginamic.dto.GenreFilmDto;
 import fr.diginamic.entities.Country;
 import fr.diginamic.entities.Genre;
 import fr.diginamic.repositories.GenreRepository;
@@ -25,11 +26,18 @@ public class GenreController {
 
     }
 
-    @GetMapping("/genre/{nameGenre}")
-    public GenreDto getGenreByName(@PathVariable String nameGenre){
+    @GetMapping("/films/{nameGenre}")
+    public GenreFilmDto getGenreByName(@PathVariable String nameGenre){
 
         return genreService.getGenreByName(nameGenre);
     }
+    @GetMapping("/{id}/films")
+    public GenreFilmDto getfilmGenreById(@PathVariable int id){
+
+        return genreService.getfilmGenreById(id);
+    }
+
+
 
  @PutMapping
  public GenreDto insertGenre(@RequestBody Genre newGenre) {

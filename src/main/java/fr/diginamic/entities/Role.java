@@ -2,6 +2,7 @@ package fr.diginamic.entities;
 
 import jakarta.persistence.*;
 
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -19,7 +20,7 @@ public class Role {
     @JoinColumn(name = "film_id")
     private Film film;
 
-    public Role() {
+    public Role(List<Role> byFilmId) {
     }
 
     public Role(int id) {
@@ -30,6 +31,10 @@ public class Role {
         this.roleName = roleName;
         this.person = person;
         this.film = film;
+    }
+
+    public Role() {
+
     }
 
     public int getId() {

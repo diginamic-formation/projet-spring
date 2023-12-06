@@ -22,15 +22,15 @@ public class LanguageService {
     /////Recherche des languages de film
     public List<LanguageDto> getAll() {
         Iterable<Language> languages = languageRepository.findAll();
-        List<LanguageDto> languageDto = new ArrayList<>();
+        List<LanguageDto> languagesDto = new ArrayList<>();
         for(Language language : languages){
-            languageDto = (List<LanguageDto>) new LanguageDto(language);
-            languageDto.add((LanguageDto) languageDto);
+            LanguageDto languageDto =  new LanguageDto(language);
+            languagesDto.add(languageDto);
         }
-        return languageDto;
+        return languagesDto;
     }
 
-    public LanguageDto getLanguageByName(String nameLanguage) {
+    public LanguageDto getLanguageByNameLanguage(String nameLanguage) {
         Language language =languageRepository.findByNameLanguage(nameLanguage);
         LanguageDto languageDto  = new LanguageDto(language);
         return languageDto;
