@@ -13,12 +13,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * GenreService
+ *  All Genres method used in Controller
+ */
 @Component
 public class GenreService {
     @Autowired
     private GenreRepository genreRepository;
 
-
+    /**
+     * Method to list all genres
+     * @return list of
+     */
     public List<GenreDto> getAll() {
 
         Iterable <Genre> genres = genreRepository.findAll();
@@ -31,6 +38,11 @@ public class GenreService {
         return  genresDto;
     }
 
+    /**
+     * to search genre by nameGenre
+     * @param name name genre
+     * @return a genre
+     */
     public GenreFilmDto getGenreByName(String name) {
         Genre genre = genreRepository.findByNameGenre(name);
         if(genre !=null) {
@@ -39,6 +51,12 @@ public class GenreService {
         }
         return null;
     }
+
+    /**
+     * To search a genre by id
+     * @param id id genre
+     * @return
+     */
     public GenreFilmDto getfilmGenreById(int id) {
         Optional<Genre> optionalGenre = genreRepository.findById(id);
        if(optionalGenre.isPresent()){
@@ -49,14 +67,24 @@ public class GenreService {
        return null;
     }
 
-
-
+    /**
+     *  To create a new genre
+     * @param newGenre
+     * @return
+     */
     public GenreDto save(Genre newGenre) {
             Genre genre  =genreRepository.save(newGenre);
             GenreDto genreDto = new GenreDto(genre);
             return genreDto;
 
     }
+
+    /**
+     * To Update one genre
+     * @param id
+     * @param updatedGenre
+     * @return genre updated
+     */
     public String updateGenre(int id, Genre updatedGenre) {
         Optional<Genre> upGenre = genreRepository.findById(id);
         Genre genre = upGenre.get();
@@ -67,8 +95,11 @@ public class GenreService {
         }
         return "not found";
     }
-
-
+    /**
+     *To delete a genre by id
+     * @param id id genre
+     * @return
+     */
     public String deleteGenreById(int id) {
            Optional<Genre> genre = genreRepository.findById(id);
             Genre delGenre = genre.get();
@@ -79,14 +110,5 @@ public class GenreService {
             return "not found";
     }
 
-
-    public GenreDto getGenreById(int id) {
-        Optional<Genre> optionalGenre = genreRepository.findById(id);
-        if(optionalGenre.isPresent()){
-            Genre genre = optionalGenre.get();
-            return new GenreDto(genre);
-        }
-        return null;
-    }
 }
 
