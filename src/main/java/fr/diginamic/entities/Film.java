@@ -1,234 +1,234 @@
 package fr.diginamic.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
-
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-@Entity(name = "FILM")
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "FILM")
 public class Film {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
 
-    private String title;
+	private String title;
 
-    private Float rating;
+	private Float rating;
 
-    private String url;
+	private String url;
 
-    private String summary;
-    @Column(name = "year_start")
-    private int yearStart;
-    @Column(name = "year_end")
-    private int yearEnd;
-    @Column(name = "reference_number")
-    private String referenceNumber;
+	private String summary;
+	@Column(name = "year_start")
+	private int yearStart;
+	@Column(name = "year_end")
+	private int yearEnd;
+	@Column(name = "reference_number")
+	private String referenceNumber;
 
-    @ManyToOne
-    @JoinColumn(name = "language_id")
-    private Language language;
+	@ManyToOne
+	@JoinColumn(name = "language_id")
+	private Language language;
 
-    @OneToMany(mappedBy = "film")
-    private Set<Role> roleSet;
+	@OneToMany(mappedBy = "film")
+	private Set<Role> roleSet;
 
-    @ManyToOne
-    @JoinColumn(name = "country_id")
-    private Country country;
+	@ManyToOne
+	@JoinColumn(name = "country_id")
+	private Country country;
 
-    @ManyToOne
-    @JoinColumn(name = "place_id")
-    private Place place;
+	@ManyToOne
+	@JoinColumn(name = "place_id")
+	private Place place;
 
+	// @JsonIgnore
+	@ManyToMany
+	@JoinTable(name = "FILM_GENRE", joinColumns = @JoinColumn(name = "film_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "genre_id", referencedColumnName = "id"))
+	private Set<Genre> genreSet;
 
-    //@JsonIgnore
-    @ManyToMany
-    @JoinTable(name = "FILM_GENRE",
-            joinColumns = @JoinColumn(name = "film_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "genre_id", referencedColumnName = "id"))
-    private Set<Genre> genreSet;
+	@ManyToMany
+	@JoinTable(name = "REALISATORS_FILMS", joinColumns = @JoinColumn(name = "film_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "person_id", referencedColumnName = "id"))
+	private Set<Person> personSet;
 
+	public Film() {
+	}
 
-    @ManyToMany
-    @JoinTable(name = "REALISATORS_FILMS",
-            joinColumns = @JoinColumn(name = "film_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "person_id", referencedColumnName = "id"))
-    private Set<Person> personSet;
+	public Film(int id) {
+		this.id = id;
+	}
 
-    public Film() {
-    }
+	public Film(String title, Float rating, String url, String summary, int yearStart, int yearEnd,
+			String referenceNumber, Language language, Set<Role> roleSet, Country country, Place place,
+			Set<Genre> genreSet, Set<Person> personSet) {
+		this.title = title;
+		this.rating = rating;
+		this.url = url;
+		this.summary = summary;
+		this.yearStart = yearStart;
+		this.yearEnd = yearEnd;
+		this.referenceNumber = referenceNumber;
+		this.language = language;
+		this.roleSet = roleSet;
+		this.country = country;
+		this.place = place;
+		this.genreSet = genreSet;
+		this.personSet = personSet;
+	}
 
-    public Film(int id) {
-        this.id = id;
-    }
+	public Film(String title, Float rating, String url, String summary, int yearStart, int yearEnd,
+			String referenceNumber) {
+		this.title = title;
+		this.rating = rating;
+		this.url = url;
+		this.summary = summary;
+		this.yearStart = yearStart;
+		this.yearEnd = yearEnd;
+		this.referenceNumber = referenceNumber;
+	}
 
-    public Film(String title, Float rating, String url, String summary, int yearStart, int yearEnd, String referenceNumber, Language language, Set<Role> roleSet, Country country, Place place, Set<Genre> genreSet, Set<Person> personSet) {
-        this.title = title;
-        this.rating = rating;
-        this.url = url;
-        this.summary = summary;
-        this.yearStart = yearStart;
-        this.yearEnd = yearEnd;
-        this.referenceNumber = referenceNumber;
-        this.language = language;
-        this.roleSet = roleSet;
-        this.country = country;
-        this.place = place;
-        this.genreSet = genreSet;
-        this.personSet = personSet;
-    }
+	public int getId() {
+		return id;
+	}
 
-    public Film(String title, Float rating, String url, String summary, int yearStart, int yearEnd, String referenceNumber) {
-        this.title = title;
-        this.rating = rating;
-        this.url = url;
-        this.summary = summary;
-        this.yearStart = yearStart;
-        this.yearEnd = yearEnd;
-        this.referenceNumber = referenceNumber;
-    }
+	public void setId(int id) {
+		this.id = id;
+	}
 
-    public int getId() {
-        return id;
-    }
+	public String getTitle() {
+		return title;
+	}
 
-    public void setId(int id) {
-        this.id = id;
-    }
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
-    public String getTitle() {
-        return title;
-    }
+	public Float getRating() {
+		return rating;
+	}
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+	public void setRating(Float rating) {
+		this.rating = rating;
+	}
 
-    public Float getRating() {
-        return rating;
-    }
+	public String getUrl() {
+		return url;
+	}
 
-    public void setRating(Float rating) {
-        this.rating = rating;
-    }
+	public void setUrl(String url) {
+		this.url = url;
+	}
 
-    public String getUrl() {
-        return url;
-    }
+	public String getSummary() {
+		return summary;
+	}
 
-    public void setUrl(String url) {
-        this.url = url;
-    }
+	public void setSummary(String summary) {
+		this.summary = summary;
+	}
 
-    public String getSummary() {
-        return summary;
-    }
+	public int getYearStart() {
+		return yearStart;
+	}
 
-    public void setSummary(String summary) {
-        this.summary = summary;
-    }
+	public void setYearStart(int yearStart) {
+		this.yearStart = yearStart;
+	}
 
-    public int getYearStart() {
-        return yearStart;
-    }
+	public int getYearEnd() {
+		return yearEnd;
+	}
 
-    public void setYearStart(int yearStart) {
-        this.yearStart = yearStart;
-    }
+	public void setYearEnd(int yearEnd) {
+		this.yearEnd = yearEnd;
+	}
 
-    public int getYearEnd() {
-        return yearEnd;
-    }
+	public String getReferenceNumber() {
+		return referenceNumber;
+	}
 
-    public void setYearEnd(int yearEnd) {
-        this.yearEnd = yearEnd;
-    }
+	public void setReferenceNumber(String referenceNumber) {
+		this.referenceNumber = referenceNumber;
+	}
 
-    public String getReferenceNumber() {
-        return referenceNumber;
-    }
+	public Language getLanguage() {
+		return language;
+	}
 
-    public void setReferenceNumber(String referenceNumber) {
-        this.referenceNumber = referenceNumber;
-    }
+	public void setLanguage(Language language) {
+		this.language = language;
+	}
 
-    public Language getLanguage() {
-        return language;
-    }
+	public Set<Role> getRoleSet() {
+		return roleSet;
+	}
 
-    public void setLanguage(Language language) {
-        this.language = language;
-    }
+	public void setRoleSet(Set<Role> roleSet) {
+		this.roleSet = roleSet;
+	}
 
-    public Set<Role> getRoleSet() {
-        return roleSet;
-    }
+	public Country getCountry() {
+		return country;
+	}
 
-    public void setRoleSet(Set<Role> roleSet) {
-        this.roleSet = roleSet;
-    }
+	public void setCountry(Country country) {
+		this.country = country;
+	}
 
-    public Country getCountry() {
-        return country;
-    }
+	public Place getPlace() {
+		return place;
+	}
 
-    public void setCountry(Country country) {
-        this.country = country;
-    }
+	public void setPlace(Place place) {
+		this.place = place;
+	}
 
-    public Place getPlace() {
-        return place;
-    }
+	public Set<Genre> getGenreSet() {
+		return genreSet;
+	}
 
-    public void setPlace(Place place) {
-        this.place = place;
-    }
+	public void setGenreSet(Set<Genre> genreSet) {
+		this.genreSet = genreSet;
+	}
 
-    public Set<Genre> getGenreSet() {
-        return genreSet;
-    }
+	public Set<Person> getPersonSet() {
+		return personSet;
+	}
 
-    public void setGenreSet(Set<Genre> genreSet) {
-        this.genreSet = genreSet;
-    }
+	public void setPersonSet(Set<Person> personSet) {
+		this.personSet = personSet;
+	}
 
-    public Set<Person> getPersonSet() {
-        return personSet;
-    }
+	@Override
+	public String toString() {
+		return "Film{" + "id=" + id + ", title='" + title + '\'' + ", rating=" + rating + ", url='" + url + '\''
+				+ ", summary='" + summary + '\'' + ", yearStart=" + yearStart + ", yearEnd=" + yearEnd
+				+ ", referenceNumber='" + referenceNumber + '\'' + ", language=" + language + ", country=" + country
+				+ ", place=" + place + '}';
+	}
 
-    public void setPersonSet(Set<Person> personSet) {
-        this.personSet = personSet;
-    }
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+		Film film = (Film) o;
+		return yearStart == film.yearStart && yearEnd == film.yearEnd && Objects.equals(title, film.title)
+				&& Objects.equals(referenceNumber, film.referenceNumber) && Objects.equals(country, film.country);
+	}
 
-    @Override
-    public String toString() {
-        return "Film{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", rating=" + rating +
-                ", url='" + url + '\'' +
-                ", summary='" + summary + '\'' +
-                ", yearStart=" + yearStart +
-                ", yearEnd=" + yearEnd +
-                ", referenceNumber='" + referenceNumber + '\'' +
-                ", language=" + language +
-                ", country=" + country +
-                ", place=" + place +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Film film = (Film) o;
-        return yearStart == film.yearStart && yearEnd == film.yearEnd && Objects.equals(title, film.title) && Objects.equals(referenceNumber, film.referenceNumber) && Objects.equals(country, film.country);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(title, yearStart, yearEnd, referenceNumber, country);
-    }
+	@Override
+	public int hashCode() {
+		return Objects.hash(title, yearStart, yearEnd, referenceNumber, country);
+	}
 }

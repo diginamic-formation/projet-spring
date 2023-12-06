@@ -1,27 +1,29 @@
 package fr.diginamic;
 
-import fr.diginamic.database.DataBaseInsertion;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
 
+import fr.diginamic.database.DataBaseInsertion;
 
 @SpringBootApplication
-public class DataBaseFillingApplication implements CommandLineRunner {
+public class DataBaseFillingApplication {
 
-    @Autowired
-    DataBaseInsertion dataBaseInsertion;
-    public static void main(String[] args) {
+	@Autowired
+	DataBaseInsertion dataBaseInsertion;
 
-        SpringApplication application = new SpringApplication(DataBaseFillingApplication.class);
-        application.setWebApplicationType(WebApplicationType.NONE);
-        application.run(args);
-    }
-    @Override
-    public void run(String... args) throws Exception {
-        dataBaseInsertion.insertFromFile();
-    }
+	public static void main(String[] args) {
+		System.out.println("démargge application DataBaseFillingApplication");
+		SpringApplication application = new SpringApplication(DataBaseFillingApplication.class);
+		application.setWebApplicationType(WebApplicationType.NONE);
+		ConfigurableApplicationContext context = application.run();
+		DataBaseFillingApplication dataBaseApp = context.getBean(DataBaseFillingApplication.class);
+		dataBaseApp.startImport();
+	}
+
+	private void startImport() {
+		dataBaseInsertion.insertFromFile();
+	}
 }
