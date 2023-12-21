@@ -3,6 +3,7 @@ package fr.diginamic.dto;
 import fr.diginamic.entities.Person;
 import fr.diginamic.entities.Place;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class PersonDto {
@@ -47,8 +48,9 @@ public class PersonDto {
         this.fullName = fullName;
     }
 
-    public Date getBirthday() {
-        return birthday;
+    public String getBirthday() {
+        SimpleDateFormat  format = new SimpleDateFormat("dd/MM/yyyy");
+        return format.format(birthday);
     }
 
     public void setBirthday(Date birthday) {

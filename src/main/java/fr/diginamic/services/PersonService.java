@@ -147,7 +147,7 @@ public class PersonService {
         List<Object> result = personRepository.getActorsByGenre();
         for (Object object : result){
             Object[] columns = (Object[]) object;
-            System.out.println(columns[0] + "   " + columns[1] + "   "+columns[2] +"   " +columns[3]);
+            System.out.println((Person)columns[0] + "   " +(Genre) columns[1]+ "          " +columns[2] );
         }
     }
 

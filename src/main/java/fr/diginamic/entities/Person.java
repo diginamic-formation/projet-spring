@@ -1,6 +1,8 @@
 package fr.diginamic.entities;
 
 import jakarta.persistence.*;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.swing.*;
 import java.util.Date;
 import java.util.List;
@@ -15,6 +17,7 @@ public class Person {
     private int id;
     @Column(name = "full_name")
     private String fullName;
+    @DateTimeFormat(pattern="dd/MM/yyyy")
     private Date birthday;
     private Float height;
     private String url;
