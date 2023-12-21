@@ -3,6 +3,7 @@ package fr.diginamic.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,6 +30,12 @@ import fr.diginamic.services.FilmService;
 public class FilmController {
 	@Autowired
 	private FilmService filmService;
+
+
+	@GetMapping("/all")
+	public Page<FilmDto> getAllFilms(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "20") int size) {
+		return filmService.getAllFilmsWithPagination(page,size);
+	}
 
 	/**
 	 * Get the list of movies
