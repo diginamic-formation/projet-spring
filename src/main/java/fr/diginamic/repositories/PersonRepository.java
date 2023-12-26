@@ -2,16 +2,15 @@ package fr.diginamic.repositories;
 
 
 import fr.diginamic.dto.SimpleFilmDto;
-import fr.diginamic.entities.Film;
-import fr.diginamic.entities.Genre;
+import fr.diginamic.entities.*;
 
 import fr.diginamic.dto.FilmDto;
 import fr.diginamic.dto.SimpleFilmDto;
 import fr.diginamic.entities.Film;
 
-import fr.diginamic.entities.Person;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
@@ -25,7 +24,7 @@ import java.util.Optional;
 
 
 @Repository
-public interface PersonRepository extends CrudRepository<Person, Integer> {
+public interface PersonRepository extends PagingAndSortingRepository<Person,Integer>, CrudRepository<Person,Integer> {
 
     Person findByReferenceNumber(String referenceNumber);
 

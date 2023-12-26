@@ -7,6 +7,8 @@ import fr.diginamic.entities.Country;
 import fr.diginamic.entities.Genre;
 import fr.diginamic.repositories.GenreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -21,6 +23,12 @@ import java.util.Optional;
 public class GenreService {
     @Autowired
     private GenreRepository genreRepository;
+
+
+    public Page<GenreDto> getAllGenres(int page, int size) {
+        Page<Genre> genres = genreRepository.findAll(PageRequest.of(page, size));
+        return genres.map(GenreDto::new);
+    }
 
     /**
      * Method to list all genres
@@ -46,8 +54,7 @@ public class GenreService {
     public GenreFilmDto getGenreByName(String name) {
         Genre genre = genreRepository.findByNameGenre(name);
         if(genre !=null) {
-            GenreFilmDto genreFilmDto = new GenreFilmDto(genre);
-            return genreFilmDto;
+            return new GenreFilmDto(genre);
         }
         return null;
     }
@@ -102,8 +109,7 @@ public class GenreService {
      */
     public String deleteGenreById(int id) {
            Optional<Genre> genre = genreRepository.findById(id);
-            Genre delGenre = genre.get();
-            if(delGenre !=null) {
+            if(genre.isPresent()) {
               genreRepository.deleteById(id);
                 return "Deleted";
             }

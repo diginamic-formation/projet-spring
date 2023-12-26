@@ -2,6 +2,9 @@ package fr.diginamic.repositories;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -14,7 +17,7 @@ import fr.diginamic.entities.Person;
 import fr.diginamic.entities.Role;
 
 @Repository
-public interface FilmRepository extends CrudRepository<Film,Integer>, PagingAndSortingRepository<Film, Integer> {
+public interface FilmRepository extends PagingAndSortingRepository<Film, Integer>, CrudRepository<Film,Integer> {
 	Film findByReferenceNumber(String referenceNumber);
 
 	Film findByTitle(String title);
@@ -29,6 +32,11 @@ public interface FilmRepository extends CrudRepository<Film,Integer>, PagingAndS
 	@Query("SELECT r FROM Role r JOIN r.film f WHERE f.id = :film_id")
 	List<Role> findAllRoleByFilm(@Param("film_id") Integer id);
 
+	@Query("SELECT r FROM Role r JOIN r.film f WHERE f.id = :film_id")
+	Page<Role> findAllRoleByFilm(@Param("film_id") Integer id, Pageable pageable);
+
 	@Query("SELECT f FROM Film f JOIN f.roleSet r1 JOIN f.roleSet r2 WHERE r1.person.id = :person1 AND r2.person.id = :person2")
 	List<Film> findAllFilmCommunTwoActors(@Param("person1") Integer person1Id, @Param("person2") Integer person2Id);
+
+
 }
