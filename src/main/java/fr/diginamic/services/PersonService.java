@@ -19,6 +19,9 @@ import fr.diginamic.entities.Film;
 import fr.diginamic.entities.Person;
 import fr.diginamic.repositories.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -28,6 +31,17 @@ public class PersonService {
 
     @Autowired
     private PersonRepository personRepository;
+
+    /***
+     *
+     * @param page
+     * @param size
+     * @return
+     */
+    public Page<PersonDto> getAllPersons(int page, int size) {
+        Page<Person> persons = personRepository.findAll(PageRequest.of(page, size));
+        return persons.map(PersonDto::new);
+    }
 
     /**
      * @return All Person types

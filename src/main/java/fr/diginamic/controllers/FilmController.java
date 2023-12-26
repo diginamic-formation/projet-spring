@@ -4,15 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import fr.diginamic.dto.FilmActorDto;
 import fr.diginamic.dto.FilmDto;
@@ -25,13 +17,19 @@ import fr.diginamic.services.FilmService;
 /**
  * REST controller to manage movie related queries.
  */
+@CrossOrigin
 @RestController
 @RequestMapping("/films")
 public class FilmController {
 	@Autowired
 	private FilmService filmService;
 
-
+	/***
+	 *
+	 * @param page page number of the film lists
+	 * @param size the size of the film list by query
+	 * @return
+	 */
 	@GetMapping("/all")
 	public Page<FilmDto> getAllFilms(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "20") int size) {
 		return filmService.getAllFilmsWithPagination(page,size);
@@ -101,6 +99,12 @@ public class FilmController {
 	@GetMapping("/{film_id}/roles")
 	public List<FilmRoleDto> getAllRoleByFilm(@PathVariable("film_id") Integer id) {
 		return filmService.getfindAllRoleByFilm(id);
+	}
+
+
+	@GetMapping("/{film_id}/all-roles")
+	public Page<FilmRoleDto> getRolesByFilm(@PathVariable("film_id") Integer id,@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "20") int size){
+		return filmService.getfindAllRoleByFilm(id, page, size);
 	}
 
 	/**

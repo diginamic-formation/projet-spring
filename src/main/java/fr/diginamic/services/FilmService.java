@@ -30,6 +30,11 @@ public class FilmService {
 	@Autowired
 	private FilmRepository filmRepository;
 
+	/**
+	 * @param pageNumber
+	 * @param pageSize
+	 * @return
+	 */
 	public Page<FilmDto> getAllFilmsWithPagination(int pageNumber, int pageSize){
 		PageRequest pageRequest= PageRequest.of(pageNumber,pageSize);
 		Page<Film> films =  filmRepository.findAll(pageRequest);
@@ -152,6 +157,12 @@ public class FilmService {
 			return "Le film a été supprimé";
 		}
 		return "Le film n'existe pas dans la DB";
+	}
+
+
+	public Page<FilmRoleDto> getfindAllRoleByFilm(Integer id, int page, int size) {
+		Page<Role> roles = filmRepository.findAllRoleByFilm(id, PageRequest.of(page,size));
+		return roles.map(FilmRoleDto::new);
 	}
 
 	/**

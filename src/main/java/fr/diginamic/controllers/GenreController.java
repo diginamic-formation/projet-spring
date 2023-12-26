@@ -8,6 +8,7 @@ import fr.diginamic.entities.Genre;
 import fr.diginamic.repositories.GenreRepository;
 import fr.diginamic.services.GenreService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,6 +24,11 @@ public class GenreController {
 
     @Autowired
     private GenreService genreService;
+
+    @GetMapping("/all")
+    public Page<GenreDto> getAllGenres(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "20") int size){
+        return genreService.getAllGenres(page,size);
+    }
 
     /**
      * Return all film's genre

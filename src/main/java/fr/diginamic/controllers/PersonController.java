@@ -17,6 +17,7 @@ import fr.diginamic.entities.Film;
 import fr.diginamic.entities.Person;
 import fr.diginamic.services.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,6 +29,16 @@ public class PersonController {
     @Autowired
     private PersonService personService;
 
+    /***
+     *
+     * @param page the page number of the persons list
+     * @param size size of persons lists by query
+     * @return
+     */
+    @GetMapping("/all")
+    public Page<PersonDto> getAllPersons(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "20") int size){
+        return personService.getAllPersons(page,size);
+    }
 
     @GetMapping
     public List<PersonDto> getPersons() {
