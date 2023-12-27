@@ -2,25 +2,32 @@ package fr.diginamic.dto;
 
 import fr.diginamic.entities.Person;
 import fr.diginamic.entities.Place;
+import fr.diginamic.entities.Role;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class PersonDto {
 
     private int  id;
     private String fullName;
-    private Date birthday;
+    private String birthday;
     private Float height;
     private String url;
     private String referenceNumber;
     private String country;
     private String placeName;
+    private Set<SimpleFilmDto> films = new HashSet<>();
+
 
     public PersonDto(Person person) {
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         this.id = person.getId();
         this.fullName = person.getFullName();
-        this.birthday = person.getBirthday();
+        this.birthday = person.getBirthday() == null ?"N/A" : format.format(person.getBirthday());
         this.height = person.getHeight();
         this.url = person.getUrl();
         this.referenceNumber = person.getReferenceNumber();
@@ -29,6 +36,9 @@ public class PersonDto {
             if(person.getPlace().getCountry() != null){
                 this.country = person.getPlace().getCountry().getNameCountry();
             }
+        }
+        if(person.getRoleSet() != null){
+            films = person.getRoleSet().stream().map(Role::getFilm).map(SimpleFilmDto::new).collect(Collectors.toSet());
         }
     }
 
@@ -49,11 +59,10 @@ public class PersonDto {
     }
 
     public String getBirthday() {
-        SimpleDateFormat  format = new SimpleDateFormat("dd/MM/yyyy");
-        return format.format(birthday);
+        return birthday;
     }
 
-    public void setBirthday(Date birthday) {
+    public void setBirthday(String birthday) {
         this.birthday = birthday;
     }
 
@@ -95,5 +104,13 @@ public class PersonDto {
 
     public void setPlaceName(String placeName) {
         this.placeName = placeName;
+    }
+
+    public Set<SimpleFilmDto> getFilms() {
+        return films;
+    }
+
+    public void setFilms(Set<SimpleFilmDto> films) {
+        this.films = films;
     }
 }

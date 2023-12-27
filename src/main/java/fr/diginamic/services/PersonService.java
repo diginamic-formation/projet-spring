@@ -40,6 +40,7 @@ public class PersonService {
      */
     public Page<PersonDto> getAllPersons(int page, int size) {
         Page<Person> persons = personRepository.findAll(PageRequest.of(page, size));
+        System.out.println(persons);
         return persons.map(PersonDto::new);
     }
 
