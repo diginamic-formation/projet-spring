@@ -3,8 +3,7 @@ package fr.diginamic.services;
 import fr.diginamic.dto.GenreDto;
 import fr.diginamic.dto.PersonDto;
 import fr.diginamic.dto.SimpleFilmDto;
-import fr.diginamic.entities.Film;
-import fr.diginamic.entities.Genre;
+import fr.diginamic.entities.*;
 
 import fr.diginamic.dto.GenreFilmDto;
 import fr.diginamic.dto.PersonDto;
@@ -16,14 +15,17 @@ import fr.diginamic.dto.PersonDto;
 import fr.diginamic.dto.SimpleFilmDto;
 import fr.diginamic.entities.Film;
 
-import fr.diginamic.entities.Person;
+import fr.diginamic.exceptions.AnomalyPersonException;
 import fr.diginamic.repositories.PersonRepository;
+import fr.diginamic.repositories.PlaceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
@@ -31,6 +33,8 @@ public class PersonService {
 
     @Autowired
     private PersonRepository personRepository;
+    @Autowired
+    private PlaceService placeService;
 
     /***
      *
@@ -76,7 +80,7 @@ public class PersonService {
      */
     public PersonDto getPersonByImdb(String imdb) {
         Person person = personRepository.findByReferenceNumber(imdb);
-        if(person != null){
+        if (person != null) {
             PersonDto personDto = new PersonDto(person);
             return personDto;
         }
@@ -86,6 +90,7 @@ public class PersonService {
 
     /**
      * Purpose: save a new Person based on PersonDto constructor
+     *
      * @param newPerson Person type
      * @return PersonDto Type
      */
@@ -99,26 +104,36 @@ public class PersonService {
 
     /**
      * Purpose: update an existing Person type
-     * @param id person id
+     *
+     * @param person            the old version of person present in data base
      * @param personUpdated Person type
      * @return String message
      */
-    public String updatePerson(int id, Person personUpdated) {
-
-        Optional<Person> optionalPerson = personRepository.findById(id);
-
-        if (optionalPerson.isPresent()) {
-            Person person = optionalPerson.get();
+    public void updatePerson(Person person, PersonDto personUpdated) throws AnomalyPersonException {
+        if (personUpdated.getFullName() != null) {
+            if(personUpdated.getFullName().length()<=2){
+                throw new AnomalyPersonException("Actor's fullname size must be more than 2 characters");
+            }
             person.setFullName(personUpdated.getFullName());
-            person.setBirthday(personUpdated.getBirthday());
-            person.setHeight(personUpdated.getHeight());
-            person.setUrl(personUpdated.getUrl());
-            person.setReferenceNumber(personUpdated.getReferenceNumber());
-            person.setPlace(personUpdated.getPlace());
-            personRepository.save(person);
-            return "The person has been updated";
         }
-        return "The Person does not exist in the database";
+
+        if (personUpdated.getHeight() != null) {
+            person.setHeight(personUpdated.getHeight());
+        }
+
+        if (personUpdated.getBirthday() != null) {
+            try {
+                SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+                person.setBirthday(format.parse(personUpdated.getBirthday()));
+            } catch (ParseException e) {
+                throw new AnomalyPersonException("Date format not supprted !");
+            }
+        }
+        Place place = placeService.insertPlaceIfNotExist(personUpdated.getPlaceName(), personUpdated.getCountry());
+        if(place != null){
+            person.setPlace(place);
+        }
+        personRepository.save(person);
     }
 
     /**
@@ -138,13 +153,13 @@ public class PersonService {
     }
 
     /**
-     * @param id actor id
+     * @param id      actor id
      * @param yearMin start point of time
      * @param yearMax end point of time
      * @return list of films between a start year and an end year for a given actor
      */
     public List<SimpleFilmDto> findFilmsActorIdAndYearInterval(int id, int yearMin, int yearMax) {
-        return personRepository.getFilmsByIdActorAndYearInterval(id,yearMin, yearMax);
+        return personRepository.getFilmsByIdActorAndYearInterval(id, yearMin, yearMax);
     }
 
     /**
@@ -157,17 +172,18 @@ public class PersonService {
         return new GenreDto(genre);
     }
 
-// alternative for question n°10
-    public void getActorsByGenre(){
+    // alternative for question n°10
+    public void getActorsByGenre() {
         List<Object> result = personRepository.getActorsByGenre();
-        for (Object object : result){
+        for (Object object : result) {
             Object[] columns = (Object[]) object;
-            System.out.println((Person)columns[0] + "   " +(Genre) columns[1]+ "          " +columns[2] );
+            System.out.println((Person) columns[0] + "   " + (Genre) columns[1] + "          " + columns[2]);
         }
     }
 
     /**
      * Purpose:
+     *
      * @param films Film
      * @return the max count of genres played by an actor
      */
@@ -181,8 +197,8 @@ public class PersonService {
             mapGenreOccurence.merge(genre, 1, Integer::sum);
         });
         System.out.println(mapGenreOccurence);
-        for (Genre genre : mapGenreOccurence.keySet()){
-            if(maxOccurence < mapGenreOccurence.get(genre)){
+        for (Genre genre : mapGenreOccurence.keySet()) {
+            if (maxOccurence < mapGenreOccurence.get(genre)) {
                 maxGenre = genre;
                 maxOccurence = mapGenreOccurence.get(genre);
             }
@@ -197,7 +213,7 @@ public class PersonService {
     public PersonFilmDto getfilmRealisatorById(int id) {
         Optional<Person> optionalPerson = personRepository.findById(id);
 
-        if(optionalPerson.isPresent()){
+        if (optionalPerson.isPresent()) {
             Person person = optionalPerson.get();
             PersonFilmDto personFilmDto = new PersonFilmDto(person);
             return personFilmDto;
@@ -211,7 +227,7 @@ public class PersonService {
      */
     public List<String> getFilmByActor(int id) {
         List<FilmDto> filmDtoList = personRepository.getAllFilmsByActorId(id);
-        List<String> titles = filmDtoList.stream().map(film -> film.getYearEnd() + ", " + film.getTitle()).toList();
+        List<String> titles = filmDtoList.stream().map(film -> film.getYear() + ", " + film.getTitle()).toList();
         return titles;
     }
 

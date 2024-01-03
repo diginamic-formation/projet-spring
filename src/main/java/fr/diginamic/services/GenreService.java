@@ -1,10 +1,10 @@
 package fr.diginamic.services;
 
-import fr.diginamic.dto.CountryDto;
-import fr.diginamic.dto.GenreDto;
-import fr.diginamic.dto.GenreFilmDto;
+import fr.diginamic.dto.*;
 import fr.diginamic.entities.Country;
+import fr.diginamic.entities.Film;
 import fr.diginamic.entities.Genre;
+import fr.diginamic.exceptions.AnomalyGenreException;
 import fr.diginamic.repositories.GenreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,7 +17,7 @@ import java.util.Optional;
 
 /**
  * GenreService
- *  All Genres method used in Controller
+ * All Genres method used in Controller
  */
 @Component
 public class GenreService {
@@ -32,88 +32,119 @@ public class GenreService {
 
     /**
      * Method to list all genres
+     *
      * @return list of
      */
     public List<GenreDto> getAll() {
 
-        Iterable <Genre> genres = genreRepository.findAll();
+        Iterable<Genre> genres = genreRepository.findAll();
         List<GenreDto> genresDto = new ArrayList<>();
-        for(Genre genre : genres){
-             GenreDto genreDto =  new GenreDto(genre);
-            genresDto.add( genreDto);
+        for (Genre genre : genres) {
+            GenreDto genreDto = new GenreDto(genre);
+            genresDto.add(genreDto);
 
         }
-        return  genresDto;
+        return genresDto;
+    }
+
+
+    public GenreDto getGenreById(int id) {
+        Optional<Genre> genre = genreRepository.findById(id);
+        return genre.map(GenreDto::new).orElse(null);
     }
 
     /**
      * to search genre by nameGenre
+     *
      * @param name name genre
      * @return a genre
      */
-    public GenreFilmDto getGenreByName(String name) {
+    public GenreDto getGenreByName(String name) {
         Genre genre = genreRepository.findByNameGenre(name);
-        if(genre !=null) {
-            return new GenreFilmDto(genre);
+        if (genre != null) {
+            return new GenreDto(genre);
         }
         return null;
     }
 
     /**
      * To search a genre by id
+     *
      * @param id id genre
      * @return
      */
-    public GenreFilmDto getfilmGenreById(int id) {
-        Optional<Genre> optionalGenre = genreRepository.findById(id);
-       if(optionalGenre.isPresent()){
-           Genre genre = optionalGenre.get();
-           GenreFilmDto genreFilmDto = new GenreFilmDto(genre);
-           return genreFilmDto;
-       }
-       return null;
+    public Page<BasicFilmDto> getfilmGenreById(int id, int page, int size) {
+        Page<Film> films = genreRepository.getFilmsByGenreId(id, PageRequest.of(page, size));
+        return films.map(BasicFilmDto::new);
     }
 
     /**
-     *  To create a new genre
+     * To create a new genre
+     *
      * @param newGenre
      * @return
      */
-    public GenreDto save(Genre newGenre) {
-            Genre genre  =genreRepository.save(newGenre);
-            GenreDto genreDto = new GenreDto(genre);
-            return genreDto;
-
+    public GenreDto save(Genre newGenre) throws AnomalyGenreException {
+        if (isValidGenre(newGenre)) {
+            Genre genre = genreRepository.save(newGenre);
+            return new GenreDto(genre);
+        }
+        return null;
     }
 
     /**
      * To Update one genre
+     *
      * @param id
      * @param updatedGenre
      * @return genre updated
      */
-    public String updateGenre(int id, Genre updatedGenre) {
-        Optional<Genre> upGenre = genreRepository.findById(id);
-        Genre genre = upGenre.get();
-        if(genre !=null){
-            genre.setNameGenre(updatedGenre.getNameGenre());
-            genreRepository.save(genre);
-            return "updated";
+    public String updateGenre(int id, Genre updatedGenre) throws AnomalyGenreException {
+        Optional<Genre> optionalGenre = genreRepository.findById(id);
+        if (optionalGenre.isPresent()) {
+            Genre genre = optionalGenre.get();
+            if (isValidGenre(updatedGenre)) {
+                genre.setNameGenre(updatedGenre.getNameGenre());
+                genreRepository.save(genre);
+            }
+        } else {
+            throw new AnomalyGenreException("Id : " + id + " doesn't exist in database");
         }
-        return "not found";
+
+        return "updated";
     }
+
     /**
-     *To delete a genre by id
+     * To delete a genre by id
+     *
      * @param id id genre
      * @return
      */
-    public String deleteGenreById(int id) {
-           Optional<Genre> genre = genreRepository.findById(id);
-            if(genre.isPresent()) {
-              genreRepository.deleteById(id);
-                return "Deleted";
+    public String deleteGenreById(int id) throws AnomalyGenreException {
+        Optional<Genre> optionalGenre = genreRepository.findById(id);
+        if (optionalGenre.isPresent()) {
+            Genre genre = optionalGenre.get();
+            if(genre.getFilmSet().isEmpty()){
+                genreRepository.deleteById(id);
+            }else{
+                throw new AnomalyGenreException("Impossible to delete : "+genre.getNameGenre() + " Because it has : "+ genre.getFilmSet().size() + " Films associated !");
             }
-            return "not found";
+
+        }else{
+            throw new AnomalyGenreException("Genre with id : " + id + " is not found");
+        }
+        return "Deleted";
+    }
+
+    public boolean isValidGenre(Genre genre) throws AnomalyGenreException {
+        if (genre.getNameGenre() == null || genre.getNameGenre().length() <= 2) {
+            throw new AnomalyGenreException("Name genre must have 2 characters at least");
+        }
+        String nameGenre = genre.getNameGenre();
+        if (genreRepository.findByNameGenre(nameGenre) != null) {
+            throw new AnomalyGenreException("Genre : " + nameGenre + " already exist");
+        }
+        return true;
     }
 
 }

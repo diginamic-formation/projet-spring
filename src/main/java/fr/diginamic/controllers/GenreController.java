@@ -1,10 +1,13 @@
 package fr.diginamic.controllers;
 
 
+import fr.diginamic.dto.BasicFilmDto;
 import fr.diginamic.dto.GenreDto;
 import fr.diginamic.dto.GenreFilmDto;
+import fr.diginamic.dto.SimpleFilmDto;
 import fr.diginamic.entities.Country;
 import fr.diginamic.entities.Genre;
+import fr.diginamic.exceptions.AnomalyGenreException;
 import fr.diginamic.repositories.GenreRepository;
 import fr.diginamic.services.GenreService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,39 +29,34 @@ public class GenreController {
     private GenreService genreService;
 
     @GetMapping("/all")
-    public Page<GenreDto> getAllGenres(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "20") int size){
-        return genreService.getAllGenres(page,size);
+    public Page<GenreDto> getAllGenres(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "20") int size) {
+        return genreService.getAllGenres(page, size);
     }
 
     /**
      * Return all film's genre
+     *
      * @return the list of genre
      */
     @GetMapping
     public List<GenreDto> getGenres() {
-
         return genreService.getAll();
-
     }
 
-    /**
-     * Return a film's genre searching by id
-     * @param id id genre
-     * @return film's genre
-     */
+
     @GetMapping("/{id}")
-    public GenreFilmDto getGenreById(@PathVariable int id){
-        return genreService.getfilmGenreById(id);
+    public GenreDto getGenreById(@PathVariable int id) {
+        return genreService.getGenreById(id);
     }
 
     /**
      * Return a film's genre searching by nameGenne
+     *
      * @param nameGenre
      * @return film's genre
      */
-    @GetMapping("/{nameGenre}/list-films")
-    public GenreFilmDto getFilmsByGenreName(@PathVariable String nameGenre) {
-
+    @GetMapping("/name/{name}")
+    public GenreDto getGenreByName(@PathVariable String nameGenre) {
         return genreService.getGenreByName(nameGenre);
     }
 
@@ -67,41 +65,41 @@ public class GenreController {
      * @return
      */
     @GetMapping("/{id}/films")
-    public GenreFilmDto getFilmsByGenreId(@PathVariable int id) {
-
-        return genreService.getfilmGenreById(id);
+    public Page<BasicFilmDto> getFilmsByGenreId(@PathVariable int id, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "20") int size) {
+        return genreService.getfilmGenreById(id, page, size);
     }
 
     /**
      * Create a new films'genre
+     *
      * @param newGenre
      * @return a new film's genre
      */
-    @PutMapping
-    public GenreDto insertGenre(@RequestBody Genre newGenre) {
-
+    @PutMapping("/add")
+    public GenreDto insertGenre(@RequestBody Genre newGenre) throws AnomalyGenreException {
         return genreService.save(newGenre);
     }
 
     /**
      * Update film's genre
-     * @param id genre
+     *
+     * @param id           genre
      * @param updatedGenre
      * @return updated genre
      */
     @PostMapping("/update/{id}")
-    public String updateGenre(@PathVariable int id, @RequestBody Genre updatedGenre) {
+    public String updateGenre(@PathVariable int id, @RequestBody Genre updatedGenre) throws AnomalyGenreException {
         return genreService.updateGenre(id, updatedGenre);
     }
 
     /**
      * Delete a film's genre by id
+     *
      * @param id genre
      * @return
      */
     @DeleteMapping("/delete/{id}")
-    public String deleteCountryById(@PathVariable int id) {
-
+    public String deleteCountryById(@PathVariable int id) throws AnomalyGenreException {
         return genreService.deleteGenreById(id);
     }
 }

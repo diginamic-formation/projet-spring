@@ -106,6 +106,12 @@ public class LanguageService {
             return "not found";
         }
 
-
+    public Language addNewLanguageIfNotExist(Language language) {
+        Language languageInDataBase = languageRepository.findByNameLanguage(language.getNameLanguage().trim());
+        if(languageInDataBase == null){
+            languageInDataBase = languageRepository.save(language);
+        }
+        return languageInDataBase;
+    }
 }
 

@@ -7,8 +7,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 public class CountryDto {
-
-
     private int id;
     private String nameCountry;
     public CountryDto (Country country){

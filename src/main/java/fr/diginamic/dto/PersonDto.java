@@ -20,7 +20,7 @@ public class PersonDto {
     private String referenceNumber;
     private String country;
     private String placeName;
-    private Set<SimpleFilmDto> films = new HashSet<>();
+
 
 
     public PersonDto(Person person) {
@@ -37,9 +37,7 @@ public class PersonDto {
                 this.country = person.getPlace().getCountry().getNameCountry();
             }
         }
-        if(person.getRoleSet() != null){
-            films = person.getRoleSet().stream().map(Role::getFilm).map(SimpleFilmDto::new).collect(Collectors.toSet());
-        }
+
     }
 
     public int getId() {
@@ -106,11 +104,4 @@ public class PersonDto {
         this.placeName = placeName;
     }
 
-    public Set<SimpleFilmDto> getFilms() {
-        return films;
-    }
-
-    public void setFilms(Set<SimpleFilmDto> films) {
-        this.films = films;
-    }
 }

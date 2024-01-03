@@ -2,15 +2,11 @@ package fr.diginamic.controllers;
 
 import java.util.List;
 
+import fr.diginamic.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
-import fr.diginamic.dto.FilmActorDto;
-import fr.diginamic.dto.FilmDto;
-import fr.diginamic.dto.FilmRoleDto;
-import fr.diginamic.dto.SimpleFilmDto;
-import fr.diginamic.dto.SimplePersonDto;
 import fr.diginamic.entities.Film;
 import fr.diginamic.services.FilmService;
 
@@ -30,19 +26,9 @@ public class FilmController {
 	 * @param size the size of the film list by query
 	 * @return
 	 */
-	@GetMapping("/all")
-	public Page<FilmDto> getAllFilms(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "20") int size) {
+	@GetMapping()
+	public Page<SimpleFilmDto> getAllFilms(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "20") int size) {
 		return filmService.getAllFilmsWithPagination(page,size);
-	}
-
-	/**
-	 * Get the list of movies
-	 * 
-	 * @return the list of movies
-	 */
-	@GetMapping
-	public Iterable<FilmDto> getFilms() {
-		return filmService.getAll();
 	}
 
 	/**
@@ -63,8 +49,13 @@ public class FilmController {
 	 * @return a movie
 	 */
 	@GetMapping("/title/{title}")
-	public FilmDto getFilmByTitle(@PathVariable String title) {
-		return filmService.getFindByTitle(title);
+	public Page<FilmDto> getFilmByTitle(@PathVariable String title,@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "20") int size) {
+		return filmService.getFindByTitle(title, page, size);
+	}
+
+	@GetMapping("/auto-complete/{title}")
+	public Page<BasicFilmDto> getFilmForAutoComplete(@PathVariable String title) {
+		return filmService.getFilmsTitlesForAutoComplete(title);
 	}
 
 	/**
@@ -86,8 +77,8 @@ public class FilmController {
 	 * @return the list of
 	 */
 	@GetMapping("/{id1}/{id2}/actors")
-	public List<SimplePersonDto> getCommonActorsInFilmIds(@PathVariable int id1, @PathVariable int id2) {
-		return filmService.getActorsFilmById(id1, id2);
+	public Page<SimplePersonDto> getCommonActorsInFilmIds(@PathVariable int id1, @PathVariable int id2,@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "20") int size) {
+		return filmService.getCommonActorsInFilmIds(id1, id2, page, size);
 	}
 
 	/**
@@ -96,50 +87,31 @@ public class FilmController {
 	 * @param id
 	 * @return all the roles of a given movie
 	 */
-	@GetMapping("/{film_id}/roles")
-	public List<FilmRoleDto> getAllRoleByFilm(@PathVariable("film_id") Integer id) {
-		return filmService.getfindAllRoleByFilm(id);
-	}
-
-
-	@GetMapping("/{film_id}/all-roles")
-	public Page<FilmRoleDto> getRolesByFilm(@PathVariable("film_id") Integer id,@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "20") int size){
-		return filmService.getfindAllRoleByFilm(id, page, size);
-	}
-
-	/**
-	 * Extract movie common to 2 given actors or actresses.
-	 * 
-	 * @param person1Id
-	 * @param person2Id
-	 * @return the films common to 2 actors or actresses
-	 */
-	@GetMapping("/films-communs")
-	public List<FilmActorDto> getAllFilmCommunTwoActors(@RequestParam("person1") Integer person1Id,
-			@RequestParam("person2") Integer person2Id) {
-		return filmService.getFindAllFilmCommunTwoActors(person1Id, person2Id);
+	@GetMapping("/{id}/roles")
+	public List<FilmRoleDto> getAllRoleByFilm(@PathVariable Integer id) {
+		return filmService.getAllRoleByFilm(id);
 	}
 
 	/**
 	 * 
-	 * @param startYear
-	 * @param endYear
+	 * @param start
+	 * @param end
 	 * @return
 	 */
-	@GetMapping("/period/year{startYear}{endYear}")
-	public List<SimpleFilmDto> getSimpleFilmsDtoByPeriod(@RequestParam int startYear, @RequestParam int endYear) {
-		return filmService.getSimpleFilmsDtoByPeriod(startYear, endYear);
+	@GetMapping("/period/year{start}{end}")
+	public Page<SimpleFilmDto> getSimpleFilmsDtoByPeriod(@RequestParam int start, @RequestParam int end, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "20") int size) {
+		return filmService.getFilmsByPeriod(start, end, page, size);
 	}
 
 	/**
 	 * Insert a movie
 	 * 
-	 * @param nvFilm
+	 * @param newFilm
 	 * @return
 	 */
 	@PutMapping
-	public String saveFilm(@RequestBody Film nvFilm) {
-		filmService.insertFilm(nvFilm);
+	public String saveFilm(@RequestBody Film newFilm) {
+		filmService.insertFilm(newFilm);
 		return "La ville a été insérée avec succès";
 
 	}
@@ -153,8 +125,7 @@ public class FilmController {
 	 */
 	@PostMapping("/{id}")
 	public String updateFilm(@PathVariable int id, @RequestBody Film filmUpdate) {
-		filmService.updateFilm(id, filmUpdate);
-		return "Le film a été mis à jour";
+		return filmService.updateFilm(id, filmUpdate);
 	}
 
 	/**
@@ -168,5 +139,4 @@ public class FilmController {
 		filmService.deleteFilm(id);
 		return "Film supprimé";
 	}
-
 }

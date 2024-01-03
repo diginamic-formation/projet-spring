@@ -14,6 +14,7 @@ public class SimpleFilmDto {
     private int year;
     private String url;
     private String summary;
+    private String language;
     private String referenceNumber;
     private String country;
     private Set<String> genres;
@@ -23,6 +24,7 @@ public class SimpleFilmDto {
         this.title = film.getTitle();
         this.rating = film.getRating();
         this.year = film.getYearEnd();
+        this.language = film.getLanguage() != null ? film.getLanguage().getNameLanguage() : null;
         this.url= film.getUrl();
         this.summary= film.getSummary();
         this.referenceNumber = film.getReferenceNumber();
@@ -102,6 +104,12 @@ public class SimpleFilmDto {
         this.genres = genres;
     }
 
+    public String getLanguage() {
+        return language;
+    }
 
+    public void setLanguage(String language) {
+        this.language = language;
+    }
 }
 
