@@ -2,6 +2,7 @@ package fr.diginamic.controllers;
 
 import fr.diginamic.dto.*;
 import fr.diginamic.entities.java.FilmCoupleWithCommonActors;
+import fr.diginamic.exceptions.AnomalyPersonException;
 import fr.diginamic.services.ActorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -102,5 +103,13 @@ public class ActorController {
     public FilmCoupleWithCommonActors getFilmCoupleForQuiz() {
         return actorService.getOneFilmForQuiz();
     }
+
+
+    @PostMapping("/{id}")
+    public String updateActor(@PathVariable int id, @RequestBody PersonDto personUpdated) throws AnomalyPersonException {
+
+        return actorService.update(id, personUpdated);
+    }
+
 
 }
