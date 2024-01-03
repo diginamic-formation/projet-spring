@@ -1,5 +1,6 @@
 package fr.diginamic.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -17,6 +18,7 @@ public class Person {
     private int id;
     @Column(name = "full_name")
     private String fullName;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     @DateTimeFormat(pattern="dd/MM/yyyy")
     private Date birthday;
     private Float height;

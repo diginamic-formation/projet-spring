@@ -3,6 +3,8 @@ package fr.diginamic.entities;
 import java.util.Objects;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -39,6 +41,7 @@ public class Film {
 	private String summary;
 	@Column(name = "year_start")
 	private Integer yearStart;
+	@JsonProperty("year")
 	@Column(name = "year_end")
 	private Integer yearEnd;
 	@Column(name = "reference_number")

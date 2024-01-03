@@ -39,7 +39,6 @@ public final class CountryController {
 
    @GetMapping("/country/{nameCountry}")
    public CountryDto getCountryByNameCountry(@PathVariable String nameCountry){
-      System.out.println("country");
       return countryService.getCountryByNameCountry(nameCountry);
    }
 

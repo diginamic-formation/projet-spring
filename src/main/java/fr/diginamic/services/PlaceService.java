@@ -1,6 +1,7 @@
 package fr.diginamic.services;
 
 import fr.diginamic.dto.PlaceDto;
+import fr.diginamic.entities.Country;
 import fr.diginamic.entities.Place;
 import fr.diginamic.repositories.PlaceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,8 @@ import java.util.Optional;
 public class PlaceService {
     @Autowired
     private PlaceRepository placeRepository;
+    @Autowired
+    private CountryService countryService;
 
 
     /**
@@ -108,4 +111,17 @@ public class PlaceService {
     }
 
 
+    public Place insertPlaceIfNotExist(String placeName, String countryName) {
+        Place place = null;
+        if(countryName != null && !countryName.isEmpty()){
+            Country country = countryService.addNewCountryIfNotExist(new Country(countryName));
+            place = placeRepository.getSimilarPlace(placeName,country);
+            if(place == null){
+                place = new Place(placeName);
+                place.setCountry(country);
+                place = placeRepository.save(place);
+            }
+        }
+        return place;
+    }
 }

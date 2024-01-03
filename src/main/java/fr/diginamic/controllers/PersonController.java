@@ -43,7 +43,6 @@ public class PersonController {
     @GetMapping
     public List<PersonDto> getPersons() {
         return personService.getALL();
-
     }
 
     /**
@@ -137,7 +136,8 @@ public class PersonController {
      */
     @PostMapping("/{id}")
     public String updatePerson(@PathVariable int id, @RequestBody Person personUpdated) {
-        return personService.updatePerson(id, personUpdated);
+        //return personService.updatePerson(id, personUpdated);
+        return null;
     }
 
     /**
