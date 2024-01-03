@@ -21,7 +21,8 @@ public class PersonDto {
     private String country;
     private String placeName;
 
-
+    public PersonDto() {
+    }
 
     public PersonDto(Person person) {
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");

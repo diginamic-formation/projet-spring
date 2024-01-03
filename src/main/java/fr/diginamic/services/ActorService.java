@@ -4,6 +4,7 @@ import fr.diginamic.dto.*;
 import fr.diginamic.entities.Film;
 import fr.diginamic.entities.Person;
 import fr.diginamic.entities.java.FilmCoupleWithCommonActors;
+import fr.diginamic.exceptions.AnomalyPersonException;
 import fr.diginamic.repositories.ActorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,6 +21,8 @@ public class ActorService {
     private static  List<FilmCoupleWithCommonActors> filmsForQuiz;
     @Autowired
     private ActorRepository actorRepository;
+    @Autowired
+    private PersonService personService;
 
     public Page<PersonDto> getALLActors(int page, int size) {
         Page<Person> persons = actorRepository.findAllActors(PageRequest.of(page, size));
@@ -80,5 +83,14 @@ public class ActorService {
     public Page<SimpleFilmDto> getCommonfilmsForTwoActors(int id1, int id2 , int page, int size) {
         Page<Film> films = actorRepository.findAllFilmCommunTwoActors(id1, id2, PageRequest.of(page, size));
         return films.map(SimpleFilmDto::new);
+    }
+
+    public String update(int id, PersonDto personUpdated) throws AnomalyPersonException {
+        Person person = actorRepository.getById(id);
+        if(person != null){
+            personService.updatePerson(person,personUpdated);
+            return "Updated";
+        }
+        return "Acotr not found !";
     }
 }
