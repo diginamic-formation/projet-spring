@@ -36,14 +36,14 @@ public interface ActorRepository extends PagingAndSortingRepository<Person, Inte
     @Query("SELECT f FROM Film f JOIN f.roleSet r JOIN r.person p WHERE p.id=:id AND f.yearEnd BETWEEN :yearMin AND :yearMax")
     Page<Film> findFilmsInYearIntervall(int id, int yearMin, int yearMax, PageRequest of);
 
-    @Query(value = "SELECT DISTINCT f1.id, f2.id " +
+    @Query(value = "SELECT DISTINCT r1.person.id, r2.person.id " +
             "FROM Role r1 " +
-            "JOIN Role r2 ON r1.person.id = r2.person.id AND r1.film.id < r2.film.id AND r1.film.yearEnd>2000 AND r2.film.yearEnd>2000" +
-            "JOIN Film f1 ON r1.film = f1 " +
-            "JOIN Film f2 ON r2.film = f2")
-    List<Object[]> getFilmswithCommonActor();
+            "JOIN Role r2 ON r1.film.id = r2.film.id AND r1.person.id < r2.person.id " +
+            "WHERE r1.film.yearEnd>2000 AND r2.film.yearEnd>2000"
+    )
+    List<Object[]> getActorswithCommonFilm();
 
     @Query("SELECT f FROM Film f JOIN f.roleSet r1 JOIN f.roleSet r2 WHERE r1.person.id = :id1 AND r2.person.id = :id2")
-    Page<Film> findAllFilmCommunTwoActors(int id1, int id2, PageRequest pageRequest);
+    List<Film> findAllFilmCommunTwoActors(int id1, int id2);
 
 }

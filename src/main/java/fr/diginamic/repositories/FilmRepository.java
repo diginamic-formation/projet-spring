@@ -24,7 +24,7 @@ public interface FilmRepository extends PagingAndSortingRepository<Film, Integer
 
 	@Query("SELECT p from Person p join p.roleSet r join r.film f " + "where f.id =:id1 and p.id in "
 			+ "(SELECT p.id from Person p join p.roleSet r join r.film f where f.id =:id2)")
-	Page<Person> findCommonPersonInFilms(int id1, int id2, PageRequest pageRequest);
+	List<Person> findCommonPersonInFilms(int id1, int id2);
 
 	@Query("Select f FROM Film f WHERE f.yearEnd BETWEEN :startYear AND :endYear")
 	Page<Film> getSimpleFilmsDtoByPeriod(@Param("startYear") int startYear, @Param("endYear") int endYear, PageRequest pageRequest);
@@ -32,8 +32,7 @@ public interface FilmRepository extends PagingAndSortingRepository<Film, Integer
 	@Query("SELECT r FROM Role r JOIN r.film f WHERE f.id = :film_id")
 	List<Role> findAllRoleByFilm(@Param("film_id") Integer id);
 
-	@Query("SELECT r FROM Role r JOIN r.film f WHERE f.id = :film_id")
-	Page<Role> findAllRoleByFilm(@Param("film_id") Integer id, Pageable pageable);
+
 
 	@Query("SELECT f FROM Film f JOIN f.roleSet r1 JOIN f.roleSet r2 WHERE r1.person.id = :person1 AND r2.person.id = :person2")
 	Page<Film> findAllFilmCommunTwoActors(@Param("person1") Integer person1Id, @Param("person2") Integer person2Id, PageRequest pageRequest);
@@ -51,4 +50,12 @@ public interface FilmRepository extends PagingAndSortingRepository<Film, Integer
 			"ORDER BY RAND() " +
 			"LIMIT 20", nativeQuery = true)
     List<Film> getRandomFilms();
+
+
+	@Query(value = "SELECT DISTINCT r1.film.id, r2.film.id " +
+			"FROM Role r1 " +
+			"JOIN Role r2 ON r1.person.id = r2.person.id AND r1.film.id < r2.film.id " +
+			"WHERE r1.film.yearEnd>2000 AND r2.film.yearEnd>2000"
+			)
+	List<Object[]> getFilmswithCommonActor();
 }

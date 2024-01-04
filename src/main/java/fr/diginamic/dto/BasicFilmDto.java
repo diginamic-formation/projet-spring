@@ -15,6 +15,13 @@ public class BasicFilmDto {
         this.referenceNumber= film.getReferenceNumber();
     }
 
+    public BasicFilmDto(FilmDto film) {
+        this.id = film.getId();
+        this.title = film.getTitle();
+        this.referenceNumber = film.getReferenceNumber();
+        this.year = film.getYear();
+    }
+
     public int getId() {
         return id;
     }

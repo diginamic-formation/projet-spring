@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 @Service
 public class ActorService {
 
-    private static  List<FilmCoupleWithCommonActors> filmsForQuiz;
+
     @Autowired
     private ActorRepository actorRepository;
     @Autowired
@@ -56,29 +56,6 @@ public class ActorService {
         return films.map(SimpleFilmDto::new);
     }
 
-    public void getCoupleOfFilmWithCommonActors(){
-        if(filmsForQuiz == null){
-            System.out.println("Chargement de la liste");
-            List<Object[]> films = actorRepository.getFilmswithCommonActor();
-            
-            //filmsForQuiz = films.stream().map(FilmCoupleWithCommonActors::new).collect(Collectors.toList());
-            System.out.println(filmsForQuiz.size()+" films to combine");
-        }else{
-            System.out.println(filmsForQuiz.size()+" films to combine without loading");
-        }
-    }
-
-    public FilmCoupleWithCommonActors getOneFilmForQuiz(){
-        getCoupleOfFilmWithCommonActors();
-        int index = (int) (Math.random()*filmsForQuiz.size());
-        QuizResponseFilms response = getFilmQuizResponse(filmsForQuiz.get(index));
-        return filmsForQuiz.get(index);
-    }
-
-    private QuizResponseFilms getFilmQuizResponse(FilmCoupleWithCommonActors filmCoupleWithCommonActors) {
-        return null;
-    }
-
 
     /**
      * Get movie common to 2 given actors or actresses
@@ -87,9 +64,9 @@ public class ActorService {
      * @param id2
      * @return
      */
-    public Page<SimpleFilmDto> getCommonfilmsForTwoActors(int id1, int id2 , int page, int size) {
-        Page<Film> films = actorRepository.findAllFilmCommunTwoActors(id1, id2, PageRequest.of(page, size));
-        return films.map(SimpleFilmDto::new);
+    public List<BasicFilmDto> getCommonfilmsForTwoActors(int id1, int id2 ) {
+        List<Film> films = actorRepository.findAllFilmCommunTwoActors(id1, id2);
+        return films.stream().map(BasicFilmDto::new).toList();
     }
 
     public String update(int id, PersonDto personUpdated) throws AnomalyPersonException {
