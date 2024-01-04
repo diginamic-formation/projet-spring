@@ -37,27 +37,6 @@ public interface PersonRepository extends PagingAndSortingRepository<Person,Inte
     @Query("SELECT f FROM Film f JOIN f.roleSet r JOIN r.person p WHERE p.id=:id")
     List<Film> getGenreSpecialityByActorId(int id);
 
-    // @Query("SELECT p,f,g,count(*) FROM Person p JOIN p.roleSet r JOIN r.film f JOIN f.genreSet g  where p.id=17344 group by g.id order by p.id, count(*) desc"  )
-    @Query("SELECT p,g, max(nbFilm) FROM "+
-            " (SELECT r.person AS p , f AS f ,g AS g, count(*) AS nbFilm  FROM Role r JOIN film f JOIN f.genreSet g GROUP BY r.person,g ORDER BY count(*) DESC)" +
-            " group by p")
-    List<Object> getActorsByGenre();
-
-    @Query("(SELECT p,g,nbFilm FROM "+
-            " (SELECT r.person AS p , f AS f ,g AS g, count(*) AS nbFilm  FROM Role r JOIN film f JOIN f.genreSet g GROUP BY p,g ORDER BY p ASC, nbFilm DESC )" +
-            " group by p)")
-    List<Object> getNativeActorsByGenre();
-
-    @Query(value = "SELECT full_name,name_genre, max(nb_film) " +
-            "FROM (SELECT person.full_name, genre.name_genre, count(*) as nb_film " +
-            "FROM genre " +
-            "JOIN film_genre ON genre.id = film_genre.genre_id " +
-            "JOIN film ON film_genre.film_id= film.id " +
-            "JOIN role ON role.film_id=film.id " +
-            "JOIN person ON role.person_id = person.id " +
-            "Group By person.full_name,genre.name_genre) x " +
-            "group by full_name",nativeQuery = true)
-    List<Object> getNativeTwoActorsByGenre();
 
 
     @Query("SELECT new fr.diginamic.dto.FilmDto(f) FROM Film f JOIN f.roleSet r JOIN r.person p WHERE p.id = :actorId")

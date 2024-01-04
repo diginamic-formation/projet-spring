@@ -41,4 +41,14 @@ public interface FilmRepository extends PagingAndSortingRepository<Film, Integer
 
 	@Query("SELECT f FROM Film f where f.title like %:title%")
 	Page<Film> findBylikeTitle(String title, PageRequest pageRequest);
+
+	@Query(value = "SELECT * FROM Film WHERE " +
+			"film.year_end > 2000 " +
+			"AND Country_id IS NOT NULL " +
+			"AND LENGTH(summary) > 0 " +
+			"AND rating IS NOT NULL " +
+			"AND language_id IN (1 , 2) " +
+			"ORDER BY RAND() " +
+			"LIMIT 20", nativeQuery = true)
+    List<Film> getRandomFilms();
 }

@@ -4,6 +4,7 @@ import fr.diginamic.dto.*;
 import fr.diginamic.entities.Film;
 import fr.diginamic.entities.Person;
 import fr.diginamic.entities.java.FilmCoupleWithCommonActors;
+import fr.diginamic.entities.java.QuizResponseFilms;
 import fr.diginamic.exceptions.AnomalyPersonException;
 import fr.diginamic.repositories.ActorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,8 +71,14 @@ public class ActorService {
     public FilmCoupleWithCommonActors getOneFilmForQuiz(){
         getCoupleOfFilmWithCommonActors();
         int index = (int) (Math.random()*filmsForQuiz.size());
+        QuizResponseFilms response = getFilmQuizResponse(filmsForQuiz.get(index));
         return filmsForQuiz.get(index);
     }
+
+    private QuizResponseFilms getFilmQuizResponse(FilmCoupleWithCommonActors filmCoupleWithCommonActors) {
+        return null;
+    }
+
 
     /**
      * Get movie common to 2 given actors or actresses
@@ -93,4 +100,6 @@ public class ActorService {
         }
         return "Acotr not found !";
     }
+
+
 }

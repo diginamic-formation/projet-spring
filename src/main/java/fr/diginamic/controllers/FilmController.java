@@ -103,6 +103,11 @@ public class FilmController {
 		return filmService.getFilmsByPeriod(start, end, page, size);
 	}
 
+	@GetMapping("/random")
+	public List<SimpleFilmDto> getRandomFilms(){
+		return filmService.getRandomFilms();
+	}
+
 	/**
 	 * Insert a movie
 	 * 

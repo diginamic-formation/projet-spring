@@ -1,14 +1,9 @@
 package fr.diginamic.controllers;
 
 
-import fr.diginamic.dto.BasicFilmDto;
-import fr.diginamic.dto.GenreDto;
-import fr.diginamic.dto.GenreFilmDto;
-import fr.diginamic.dto.SimpleFilmDto;
-import fr.diginamic.entities.Country;
+import fr.diginamic.dto.*;
 import fr.diginamic.entities.Genre;
 import fr.diginamic.exceptions.AnomalyGenreException;
-import fr.diginamic.repositories.GenreRepository;
 import fr.diginamic.services.GenreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -68,6 +63,19 @@ public class GenreController {
     public Page<BasicFilmDto> getFilmsByGenreId(@PathVariable int id, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "20") int size) {
         return genreService.getfilmGenreById(id, page, size);
     }
+
+    @GetMapping("/{id}/actors")
+    public List<SimplePersonGenreDto> getActorsByGenreId(@PathVariable int id) {
+        return genreService.getActorsByGenreId(id);
+    }
+
+
+
+    @GetMapping("/{id}/realisators")
+    public List<SimplePersonGenreDto> getRealisatorsByGenreId(@PathVariable int id) {
+        return genreService.getRealistorsByGenreId(id);
+    }
+
 
     /**
      * Create a new films'genre

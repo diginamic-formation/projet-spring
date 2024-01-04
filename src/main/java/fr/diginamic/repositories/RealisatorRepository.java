@@ -9,6 +9,8 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface RealisatorRepository extends PagingAndSortingRepository<Person, Integer>, CrudRepository<Person,Integer> {
 
@@ -26,4 +28,5 @@ public interface RealisatorRepository extends PagingAndSortingRepository<Person,
 
     @Query("SELECT p.filmSet FROM Person p where p.filmSet is NOT EMPTY")
     Page<Film> findRealisationsById(int id, PageRequest of);
+
 }

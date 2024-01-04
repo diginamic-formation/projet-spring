@@ -1,7 +1,6 @@
 package fr.diginamic.services;
 
 import fr.diginamic.dto.*;
-import fr.diginamic.entities.Country;
 import fr.diginamic.entities.Film;
 import fr.diginamic.entities.Genre;
 import fr.diginamic.exceptions.AnomalyGenreException;
@@ -14,6 +13,7 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * GenreService
@@ -147,5 +147,14 @@ public class GenreService {
         return true;
     }
 
+    public List<SimplePersonGenreDto> getActorsByGenreId(int id) {
+        List<Object[]> results = genreRepository.getActorsByGenreId(id);
+        return results.stream().map(SimplePersonGenreDto::new).collect(Collectors.toList());
+    }
+
+    public List<SimplePersonGenreDto> getRealistorsByGenreId(int id ){
+        List<Object[]> results = genreRepository.getRealisatorsByGenreId(id);
+        return results.stream().map(SimplePersonGenreDto::new).collect(Collectors.toList());
+    }
 }
 
