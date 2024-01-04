@@ -66,26 +66,6 @@ public class PersonController {
     }
 
     /**
-     * @param id: person id
-     * @return a list of titles and year release of a film for a given actor based on his/her id.
-     */
-    @GetMapping("/{id}/filmography")
-    public List<String> getListFilmByActor(@PathVariable int id) {
-        return personService.getFilmByActor(id);
-    }
-
-    /**
-     * @param id: person id
-     * @return a list of film objects for a given actor
-     */
-    //  renvoi une liste objet de films vs liste de string de titres de films (en haut "filmography")
-    @GetMapping("/{id}/films")
-    public List<SimpleFilmDto> getFilmByActor(@PathVariable int id) {
-        return personService.getSimpleFilmByActor(id);
-    }
-
-
-    /**
      * @param id person id
      * @param min year start
      * @param max year end
@@ -103,21 +83,6 @@ public class PersonController {
     @GetMapping("/{id}/films/speciality")
     public GenreDto getGenreSpecialityByActorId(@PathVariable int id) {
         return personService.getGenreSpecialityByActorId(id);
-    }
-
-    /**
-     * @param id
-     * @return the list of films for a given realisator
-     */
-    @GetMapping("/realisator/{id}/films")
-    public PersonFilmDto getfilmRealisatorById(@PathVariable int id) {
-        return personService.getfilmRealisatorById(id);
-    }
-
-// alternative method of question n°10
-    @GetMapping("/test")
-    public void getActorsByGenre() {
-        personService.getActorsByGenre();
     }
 
     /**

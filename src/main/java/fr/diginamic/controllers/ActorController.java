@@ -96,6 +96,7 @@ public class ActorController {
         return actorService.getCommonfilmsForTwoActors(id1, id2, page, size);
     }
 
+
     /**
      * @return
      */

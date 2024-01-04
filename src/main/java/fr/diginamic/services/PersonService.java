@@ -172,14 +172,6 @@ public class PersonService {
         return new GenreDto(genre);
     }
 
-    // alternative for question n°10
-    public void getActorsByGenre() {
-        List<Object> result = personRepository.getActorsByGenre();
-        for (Object object : result) {
-            Object[] columns = (Object[]) object;
-            System.out.println((Person) columns[0] + "   " + (Genre) columns[1] + "          " + columns[2]);
-        }
-    }
 
     /**
      * Purpose:
@@ -206,38 +198,5 @@ public class PersonService {
         return maxGenre;
     }
 
-    /**
-     * @param id realisator id
-     * @return a realisator with a film list of his/her realisations
-     */
-    public PersonFilmDto getfilmRealisatorById(int id) {
-        Optional<Person> optionalPerson = personRepository.findById(id);
-
-        if (optionalPerson.isPresent()) {
-            Person person = optionalPerson.get();
-            PersonFilmDto personFilmDto = new PersonFilmDto(person);
-            return personFilmDto;
-        }
-        return null;
-    }
-
-    /**
-     * @param id actor id
-     * @return a film list of titles and year releases for a given actor
-     */
-    public List<String> getFilmByActor(int id) {
-        List<FilmDto> filmDtoList = personRepository.getAllFilmsByActorId(id);
-        List<String> titles = filmDtoList.stream().map(film -> film.getYear() + ", " + film.getTitle()).toList();
-        return titles;
-    }
-
-    /**
-     * @param id actor id
-     * @return a list of films for a given actor
-     */
-    public List<SimpleFilmDto> getSimpleFilmByActor(int id) {
-        return personRepository.getAllSimpleFilmsByActorId(id);
-
-    }
 
 }

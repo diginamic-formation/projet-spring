@@ -1,6 +1,7 @@
 package fr.diginamic.repositories;
 
 import fr.diginamic.dto.ActorDto;
+import fr.diginamic.dto.SimpleFilmDto;
 import fr.diginamic.entities.Film;
 import fr.diginamic.entities.Person;
 import org.springframework.data.domain.Page;
@@ -34,9 +35,6 @@ public interface ActorRepository extends PagingAndSortingRepository<Person, Inte
 
     @Query("SELECT f FROM Film f JOIN f.roleSet r JOIN r.person p WHERE p.id=:id AND f.yearEnd BETWEEN :yearMin AND :yearMax")
     Page<Film> findFilmsInYearIntervall(int id, int yearMin, int yearMax, PageRequest of);
-
-
-
 
     @Query(value = "SELECT DISTINCT f1.id, f2.id " +
             "FROM Role r1 " +

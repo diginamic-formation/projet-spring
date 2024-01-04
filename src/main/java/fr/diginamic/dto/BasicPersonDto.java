@@ -9,6 +9,9 @@ public class BasicPersonDto {
     private String fullName;
     private String referenceNumber;
 
+    public BasicPersonDto() {
+    }
+
     public BasicPersonDto(Person person) {
         this.id = person.getId();
         this.fullName = person.getFullName();
@@ -18,6 +21,14 @@ public class BasicPersonDto {
     public BasicPersonDto(Role role) {
         this.id = role.getPerson().getId();
         this.fullName = role.getPerson().getFullName();
+        this.referenceNumber = role.getPerson().getReferenceNumber();
+    }
+
+
+    public BasicPersonDto(int id, String fullName, String referenceNumber) {
+        this.id = id;
+        this.fullName = fullName;
+        this.referenceNumber = referenceNumber;
     }
 
     public int getId() {

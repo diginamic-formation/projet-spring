@@ -186,4 +186,12 @@ public class FilmService {
         return films.map(SimpleFilmDto::new);
     }
 
+    /**
+     *
+     * @return
+     */
+    public List<SimpleFilmDto> getRandomFilms() {
+        List<Film> films = filmRepository.getRandomFilms();
+        return films.stream().map(SimpleFilmDto::new).collect(Collectors.toList());
+    }
 }
