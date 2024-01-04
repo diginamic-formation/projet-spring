@@ -60,9 +60,9 @@ public class FilmService {
      * @param id2
      * @return
      */
-    public Page<SimplePersonDto> getCommonActorsInFilmIds(int id1, int id2, int page, int size) {
-        Page<Person> persons = filmRepository.findCommonPersonInFilms(id1, id2, PageRequest.of(page, size));
-        return persons.map(SimplePersonDto::new);
+    public List<BasicPersonDto> getCommonActorsInFilmIds(int id1, int id2) {
+        List<Person> persons = filmRepository.findCommonPersonInFilms(id1, id2);
+        return persons.stream().map(BasicPersonDto::new).toList();
     }
 
     /**
@@ -96,22 +96,6 @@ public class FilmService {
     public FilmDto getFindByReferenceNumber(String referenceNumber) {
         Film film = filmRepository.findByReferenceNumber(referenceNumber);
         return film != null ? new FilmDto(film) : null;
-    }
-
-
-    /**
-     * delete a movie
-     *
-     * @param id
-     * @return
-     */
-    public String deleteFilm(int id) {
-        Optional<Film> film = filmRepository.findById(id);
-        if (film.isPresent()) {
-            filmRepository.delete(film.get());
-            return "Le film a été supprimé";
-        }
-        return "Le film n'existe pas dans la DB";
     }
 
     /**
@@ -193,5 +177,20 @@ public class FilmService {
     public List<SimpleFilmDto> getRandomFilms() {
         List<Film> films = filmRepository.getRandomFilms();
         return films.stream().map(SimpleFilmDto::new).collect(Collectors.toList());
+    }
+
+    /**
+     * delete a movie
+     *
+     * @param id
+     * @return
+     */
+    public String deleteFilm(int id) {
+        Optional<Film> film = filmRepository.findById(id);
+        if (film.isPresent()) {
+            filmRepository.delete(film.get());
+            return "Le film a été supprimé";
+        }
+        return "Le film n'existe pas dans la DB";
     }
 }

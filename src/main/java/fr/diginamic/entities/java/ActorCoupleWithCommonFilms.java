@@ -1,11 +1,11 @@
 package fr.diginamic.entities.java;
 
-public class ActorsWithCommonFilms {
+public class ActorCoupleWithCommonFilms {
 
     private int idPerson1;
     private int idPerson2;
 
-    public ActorsWithCommonFilms(Object[] object) {
+    public ActorCoupleWithCommonFilms(Object[] object) {
         this.idPerson1 = (int) object[0];
         this.idPerson2 = (int) object[1];
     }

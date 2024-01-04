@@ -77,8 +77,8 @@ public class FilmController {
 	 * @return the list of
 	 */
 	@GetMapping("/{id1}/{id2}/actors")
-	public Page<SimplePersonDto> getCommonActorsInFilmIds(@PathVariable int id1, @PathVariable int id2,@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "20") int size) {
-		return filmService.getCommonActorsInFilmIds(id1, id2, page, size);
+	public List<BasicPersonDto> getCommonActorsInFilmIds(@PathVariable int id1, @PathVariable int id2) {
+		return filmService.getCommonActorsInFilmIds(id1, id2);
 	}
 
 	/**

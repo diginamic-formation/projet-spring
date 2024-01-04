@@ -31,6 +31,13 @@ public class BasicPersonDto {
         this.referenceNumber = referenceNumber;
     }
 
+    public BasicPersonDto(ActorDto actor) {
+        this.id = actor.getId();
+        this.fullName=actor.getFullName();
+        this.referenceNumber=actor.getReferenceNumber();
+    }
+
+
     public int getId() {
         return id;
     }

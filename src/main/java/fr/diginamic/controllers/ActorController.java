@@ -2,6 +2,7 @@ package fr.diginamic.controllers;
 
 import fr.diginamic.dto.*;
 import fr.diginamic.entities.java.FilmCoupleWithCommonActors;
+import fr.diginamic.entities.java.QuizResponseFilms;
 import fr.diginamic.exceptions.AnomalyPersonException;
 import fr.diginamic.services.ActorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -91,26 +92,14 @@ public class ActorController {
      * @return the films common to 2 actors or actresses
      */
     @GetMapping("/{id1}/{id2}/films")
-    public Page<SimpleFilmDto> getAllFilmInCommonForTwoActors(@PathVariable int id1, @PathVariable int id2,
-                                                              @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "20") int size) {
-        return actorService.getCommonfilmsForTwoActors(id1, id2, page, size);
+    public List<BasicFilmDto> getAllFilmInCommonForTwoActors(@PathVariable int id1, @PathVariable int id2) {
+        return actorService.getCommonfilmsForTwoActors(id1, id2);
     }
-
-
-    /**
-     * @return
-     */
-    @GetMapping("/quiz/generate")
-    public FilmCoupleWithCommonActors getFilmCoupleForQuiz() {
-        return actorService.getOneFilmForQuiz();
-    }
-
 
     @PostMapping("/{id}")
     public String updateActor(@PathVariable int id, @RequestBody PersonDto personUpdated) throws AnomalyPersonException {
 
         return actorService.update(id, personUpdated);
     }
-
 
 }
