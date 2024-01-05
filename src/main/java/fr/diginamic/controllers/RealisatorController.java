@@ -17,7 +17,7 @@ public class RealisatorController {
     @Autowired
     RealisatorService realisatorService;
     @GetMapping()
-    public Page<SimplePersonDto> getAll(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "20") int size){
+    public Page<PersonDto> getAll(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "20") int size){
         return realisatorService.getALLRealisators(page,size);
     }
 

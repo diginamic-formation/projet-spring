@@ -22,9 +22,9 @@ public class RealisatorService {
     @Autowired
     private PersonService personService;
 
-    public Page<SimplePersonDto> getALLRealisators(int page, int size) {
+    public Page<PersonDto> getALLRealisators(int page, int size) {
         Page<Person> persons = realisatorRepository.findAllRealisators(PageRequest.of(page, size));
-        return persons.map(SimplePersonDto::new);
+        return persons.map(PersonDto::new);
     }
 
 
