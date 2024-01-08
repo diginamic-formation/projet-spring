@@ -73,9 +73,9 @@ public class GenreService {
      * @param id id genre
      * @return
      */
-    public Page<BasicFilmDto> getfilmGenreById(int id, int page, int size) {
+    public Page<SimpleFilmDto> getfilmGenreById(int id, int page, int size) {
         Page<Film> films = genreRepository.getFilmsByGenreId(id, PageRequest.of(page, size));
-        return films.map(BasicFilmDto::new);
+        return films.map(SimpleFilmDto::new);
     }
 
     /**

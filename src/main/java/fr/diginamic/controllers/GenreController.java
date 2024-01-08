@@ -60,7 +60,7 @@ public class GenreController {
      * @return
      */
     @GetMapping("/{id}/films")
-    public Page<BasicFilmDto> getFilmsByGenreId(@PathVariable int id, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "20") int size) {
+    public Page<SimpleFilmDto> getFilmsByGenreId(@PathVariable int id, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "20") int size) {
         return genreService.getfilmGenreById(id, page, size);
     }
 

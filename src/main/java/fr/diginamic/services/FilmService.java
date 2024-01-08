@@ -83,7 +83,7 @@ public class FilmService {
      * @return
      */
     public Page<BasicFilmDto> getFilmsTitlesForAutoComplete(String title) {
-        Page<Film> films = filmRepository.findBylikeTitle(title, PageRequest.of(0, 10));
+        Page<Film> films = filmRepository.findBylikeTitle(title, PageRequest.of(0, 5));
         return films.map(BasicFilmDto::new);
     }
 
